@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="utf-8"/>
+    <title>楼层信息</title>
+    <LINK href="../../css/apps/building_info.css" type=text/css rel=stylesheet>
+
+    <script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+</head>
+
+<body>
+
+<h1 align="center">楼层信息</h1>
+<button onclick="window.location.href='floor_add.html'">添加</button><br>
+每页显示<select name="ps" id="ps">
+    <option value="1">4</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">1</option>
+</select>条数据&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共<span id="totalRec"></span>条数据。
+<input type="button" id="allBuilding" value="全选">
+<input type="button" id="uncheck" value="取消全选" />
+<input type="button" value="批量删除" onclick="deleteAll()">
+<table width="100%" border="1" align="center" cellpadding="3" cellspacing="1"
+       bordercolor="#ADADAD"
+       style="border-collapse:collapse">
+    <thead>
+    <tr>
+        <th bgcolor="#A4B6D7">序号</th>
+        <th bgcolor='#A4B6D7'>编号</th>
+        <th bgcolor='#A4B6D7'>名称</th>
+        <th bgcolor='#A4B6D7'>房间数</th>
+        <th bgcolor='#A4B6D7'>床位数</th>
+        <th bgcolor='#A4B6D7'>所属楼宇</th>
+        <th bgcolor="#A4B6D7">操作</th>
+    </tr>
+    </thead>
+    <tbody id="tbody-result"></tbody>
+
+    <!--<a href="sushe_updt.jsp?id=<%=id%>">修改</a>-->
+    <!--<a href="del.jsp?id=<%=id %>&tablename=sushe"
+    onclick="return confirm('确认删除？')">删除</a></td>-->
+
+</table>
+<br>
+<div style="height:5px;margin:5px ;">
+    <a  id="spanFirst" onclick="toFirstPage()">首页</a>
+    <a  id="spanPre" onclick="toBeforePage()">上一页</a>
+    第&nbsp;<input type="text" style="width: 5%;text-align: center;" id="cp"/>&nbsp;页
+    <input type="button" value="跳转" onclick="toThisPage()" />
+    <a  id="spanNext" onclick="toNextPage()">下一页</a>
+    <a  id="spanLast" onclick="toLastPage()">尾页</a>
+    共<span id="totalPage"></span>页
+</div>
+<!--以上数据共条,<a style="cursor:hand" onclick="javascript:window.print();">打印本页</a>-->
+<script>
+    window.onload = function () {
+        var ps=$("#ps option:selected").text();
+        console.log(ps);
+        list(1,ps);//默认加载第一页
+        /*批量删除*/
+        var checkAll=document.getElementById('allBuilding');
+        var unCheck=document.getElementById('uncheck');
+        var tbody=document.getElementById('tbody-result');
+        var    CheckBox=tbody.getElementsByTagName('input');
+        //全选
+        checkAll.onclick=function(){
+            for(i=0;i<CheckBox.length;i++){
+                if(CheckBox[i].checked==true){
+                    CheckBox[i].checked=false;
+                }
+                else{
+                    CheckBox[i].checked=true
+                }
+            };
+        };
+        //取消全选
+        unCheck.onclick=function(){
+            for(i=0;i<CheckBox.length;i++){
+                CheckBox[i].checked=false;
+            };
+        };
+    }
+    //修改楼层
+    function updateData(id,name) {
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>");
+        console.log(name);
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>");
+        if(window.localStorage){
+            alert('This browser supports localStorage');
+        }else{
+            alert('This browser does NOT support localStorage');
+        }
+        localStorage.floorId = id;
+        localStorage.buildingName = name;
+        window.location.href="floor_updt.html";
+    }
+    /*加载页面*/
+    function list(cp,ps) {
+        $("#tbody-result").innerHTML = "";
+        var tbody = window.document.getElementById("tbody-result");
+        var spanTotalPage = window.document.getElementById("spanTotalPage");
+        var totalRec = window.document.getElementById("totalRec");
+
+        $.ajax({
+            url: "http://192.168.1.224:8080/nursecare/floor/list.do",
+            type: "POST",
+            data: {"cp": cp, "ps": ps},
+            dataType: "json",
+            success: function (data) {
+                var str = "";
+                console.log(data);
+                if ("100" == data.statu) {
+                    alert("请添加楼层！");
+                    return;
+                }
+                if (data.body.list.length > 0) {
+                    var data = data.body;
+                    console.log("cp----->"+data.cp);
+                    console.log(data.list.length);
+                    for (var j = 0; j <data.list.length; j++) {
+                        var id =  data.list[j].floorId ;
+                        var num = data.list[j].num;
+                        var name = data.list[j].name;
+                        var buildNm = data.list[j].buildingName;
+//                        alert(buildNm);
+                        str += "<tr>" +
+                            "<td><input type='checkbox' name='checkbox' value='"+id+"'>" + (j + 1) + "</td>" +
+                            "<td>" + data.list[j].num + "</td>" +
+                            "<td>" + data.list[j].floorName + "</td>" +
+                            "<td>" + data.list[j].roomNum + "</td>" +
+                            "<td>" + data.list[j].bedNum + "</td>" +
+                            "<td>" + data.list[j].buildingName + "</td>" +
+                            "<td>" + "<button onclick='updateData("+id+","+"&apos;"+buildNm+"&apos;"+")'>修改</button>" +
+                            "&nbsp;&nbsp;<button onclick='deleteData("+id+")'>删除</button>" + "</td>" +
+                            "</tr>";
+                    }
+                    tbody.innerHTML = str;
+                    totalPage.innerHTML = data.totalPage;
+                    totalRec.innerHTML = data.totalRec;
+                    $("#cp").val(data.cp);
+                }
+
+
+            },
+            error: function (data) {
+                console.log("error");
+            }
+        });
+    };
+
+    /*下拉框值改变事件*/
+    $("#ps").change(function (){
+        var ps=$("#ps option:selected").text();
+        console.log("下拉框值改变："+ps);
+        list(1,ps);
+    });
+    /* 刷新页面数据 ：用于翻页，删除*/
+    function refresh(cp){
+        //获取当前页数
+        if(cp==null){
+            cp=$("#cp").val();
+        }
+        //获取当前页面数据量大小
+        var ps=$("#ps option:selected").text();
+        //刷新数据
+        list(cp,ps);
+    }
+    /* 翻页  ：上下首末 跳转*/
+    //回到首页
+    function toFirstPage(){
+        var cpNow=$("#cp").val();
+        console.log("cpNow:"+cpNow);
+        if(cpNow=='1'){
+            alert("当前已经是第一页了!");
+            return ;
+        }
+        refresh(1);
+    }
+    //上一页
+    function toBeforePage(){
+        var cpNow=$("#cp").val();
+        if(cpNow=='1'){
+            alert("当前已经是第一页了!");
+            return ;
+        }
+        var cp=Number(cpNow)-1;
+        refresh(cp);
+    }
+    //下一页
+    function toNextPage(){
+        var cpNow=$("#cp").val();
+        var cpMax=$("#totalPage").html();
+        console.log(cpMax);
+        console.log("cpNow==pMax:"+(cpNow == cpMax));
+        if(cpNow==cpMax){
+            alert("当前已经是最后一页了!");
+            return ;
+        }
+        else {
+            var cp=Number(cpNow)+1;
+            console.log("cp="+cp)
+            refresh(cp);
+        }
+    }
+    //页面跳转
+    function toThisPage(){
+        var cpToGo=$("#cp").val();
+        var cpMax=$("#totalPage").html();
+        if(0<Number(cpToGo)&&Number(cpToGo)<=Number(cpMax)){
+            refresh(cpToGo);
+        }
+        else {
+            alert("请输入正确的页数!");
+            refresh(1);
+        }
+    }
+    //尾页
+    function toLastPage(){
+        var cpNow=$("#cp").val();
+        var cpMax=$("#totalPage").html();
+        if(cpNow==cpMax){
+            alert("当前已经是最后一页了!");
+            return ;
+        }
+        else {
+            refresh(cpMax);
+        }
+    }
+    //删除
+    function deleteData(id) {
+        console.log("传入id"+id);
+        var cpNow=$("#cp").val();
+        /*验证楼宇是否包含楼层等信息*/
+        $.ajax({
+
+            url:"http://192.168.1.224:8080/nursecare/floor/validateFloor.do",
+            data:{"floorId":id},
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+                console.log("----------->");
+                console.log(data);
+                console.log("<-----------");
+                if ("000" == data.statu){
+                    var flag = confirm("确定要删除此条记录吗?");
+                    if (flag == false) {
+                        return;
+                    }
+                    //如果不包含子信息就执行删除操作
+                    $.ajax({
+                        url: "http://192.168.1.224:8080/nursecare/floor/delete.do",
+                        data: {"floorId": id},
+                        type: "POST",
+                        dataType:"json",
+                        success: function (data) {
+                            console.log("deleteData:"+data.statu)
+                            refresh(cpNow);
+                        },
+                        error:function (data) {
+                            console.log("error!删除失败");
+                        }
+                    });
+                }
+                if ("100" == data.statu){
+                    alert(data.msg+"请先删除楼层等信息！");
+                    return;
+                }
+            },
+            error:function (data) {
+                console.log(id)
+                console.log("error");
+            }
+        });
+        return;
+
+    }
+    //批量删除
+    function deleteAll(){
+        var delitems  = "";
+        var cpNow=$("#cp").val();
+        $("input[name='checkbox']:checkbox:checked").each(function(){
+            if("" == delitems ){
+                delitems  = $(this).val();
+            }else {
+                delitems =delitems +","+$(this).val();
+            }
+
+        })
+        console.log("-------->")
+        console.log(delitems );
+        if ("" == delitems) {
+            alert("请先选择要删除的项");
+            return;
+        }
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/floor/batchValidateFloor.do",
+            data:{"delitems":delitems},
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+                if ("000" == data.statu) {
+//                    alert("000");
+                    $.ajax({
+                        url:"http://192.168.1.224:8080/nursecare/floor/batchDeletes.do",
+                        data:{"delitems":delitems},
+                        type:"POST",
+                        dataType:"json",
+                        success:function (data) {
+                            if ("000" == data.statu) {
+                                alert("删除成功！");
+                                window.location.href = "floor_info.html";
+                            }
+                        },
+                        error:function (data) {
+                            console.log(delitems);
+                            alert("操作失败");
+                            console.log("error")
+                        }
+                    });
+                }
+                if ("100" == data.statu) {
+                    alert(data.msg);
+                }
+            },
+            error:function (data) {
+                console.log("error");
+            }
+        });
+    }
+</script>
+
+</body>
+
+</html>
+

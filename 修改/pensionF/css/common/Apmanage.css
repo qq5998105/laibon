@@ -1,0 +1,106 @@
+body{
+	background-color: #ffffff;
+	font-size: 12px;
+}
+.nav-tabs{
+	background-color: #428bca;
+}
+#titleRow{
+	font-size: larger;
+}
+a{
+	
+	color: #080808;
+}
+.floor {
+    margin-bottom: 15px;
+    width: 160px;
+    height: 30px;
+    border-color: #eeeeee;
+    border-radius: 5px;
+}
+#curefloor{
+	padding-top: 5px;
+    padding-left: 20px;
+}
+#searchIcon {
+	background-color: #6bb2fb;
+	border-color:#ffffff;
+	height: 35px;margin-left: 10px;
+	float: left;
+}
+#senior_searchIcon {
+	background-color: #6bb2fb;
+	border-color:#ffffff;
+	height: 35px;margin-left: 10px;
+	float: left;
+}
+#deleteBtn{
+	background-color: #ffffff;
+	border-color:#ffffff;
+	height: 35px;margin-left: 10px;
+	float: right;
+	color: black;
+}
+#addBtn{
+	background-color: #ffffff;
+	border-color:#ffffff;
+	height: 35px;margin-left: 10px;
+	float: right;
+	color: black;
+}
+
+#tags{
+	float: left;
+    width: 30%;
+    color: #ddd;
+}
+.botoom{
+  //display: -webkit-box;	
+  
+}
+.botoom-left{
+	display: inline;
+    float: left;
+    padding-left: 0px;
+    margin-top: 25px;
+    
+}
+.botoom-right{
+	padding-left: 0px;
+    padding-right: 0px;
+	display: inline;
+    float: right;
+}
+.pagination{
+	float: left;
+	    
+}
+
+.botoom-right1{
+	display: inline;
+    float: left;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+#tag{
+	width: 40px;
+    display: inline;
+}
+#search-Go{
+	
+}
+#myModalLabel{
+	text-align: center;
+}
+.modal-header{
+	background-color: rgba(166, 197, 255, 0.44);
+}
+#labelIPC{
+	padding-left: 0; 
+}
+#searching{
+	display: none;
+}
+
+

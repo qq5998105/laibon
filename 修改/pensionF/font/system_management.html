@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统管理</title>
+    <link rel="stylesheet" href="../css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common/main1.css">
+    <link rel="stylesheet" href="../css/common/jquery.treeview.css">
+    <!--<link rel="stylesheet" href="../css/common/screen.css">-->
+    <script src="../js/plugins/jquery-1.10.2.min.js"></script>
+    <script src="../js/plugins/bootstrap.min.js"></script>
+    <script src="../js/plugins/jquery.cookie.js"></script>
+    <script src="../js/plugins/jquery.treeview.js"></script>
+    <style type="text/css">
+    	#browser a{
+    		color: #555;
+    	}
+    </style>
+</head>
+<body onload="getTreedata()">
+<!--标签式的导航菜单-->
+<div class="container">
+    <div class="row clearfix" id="titleRow">
+        <div class="col-md-12 col-sm-12 col-xs-12 column">
+            <ul class="nav nav-tabs" style="background-color: #428bca;">
+                <li >
+                    <a href="#Indoor_location">室内定位</a>
+                </li>
+                <li >
+                    <a href="#Outdoor_location">室外定位</a>
+                </li>
+                <li>
+                    <a href="#Video_surveillance">视频监控</a>
+                </li>
+                <li>
+                    <a href="#Wait_processing">等待处理</a>
+                </li>
+                <li>
+                    <a href="#Event_log">事件记录</a>
+                </li>
+                <li class="active">
+                    <a href="#system_management">系统管理</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<!--导航菜单各模块DIV-->
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="system_management">
+        <div class="container">
+            <!--系统管理@面板-->
+            <div class="col-md-12 col-sm-12 col-xs-12 column" style="height: 900px;border: 1px solid #ccc;">
+                <div class="row clearfix">
+                    <div class="col-md-3 col-sm-3 col-xs-3 column" id="left-bar">
+                        <ul id="browser" class="filetree">
+
+                        </ul>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-9 column" id="right-bar">
+
+                        <iframe name="main" id="info" src="system-manager/customInfo/custom_manage.html" frameborder="0" scrolling="auto" width="100%"
+                                height="100%"></iframe>                     //在div中添加了iframe
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--系统管理@面板-->
+    </div>
+</div>
+<script>
+    $("#browser").treeview();
+    $("#add").click(function() {
+        var branches = $("<li><span class='folder'>New Sublist</span><ul>" +
+            "<li><span class='file'>Item1</span></li>" +
+            "<li><span class='file'>Item2</span></li></ul></li>").appendTo("#browser");
+        $("#browser").treeview({
+            add: branches
+        });
+    });
+    function urlLocation(url){
+        alert("选中");
+        window.location.href=url;
+    }
+    /*获取导航菜单树的data*/
+    function getTreedata(){
+        var apiUrl='http://192.168.2.224:8080/nursecare/getMenus.do';
+        $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            //xml, html, script, json, jsonp, text
+            dataType:'text',
+            timeout: 3000,
+            beforeSend: function(XMLHttpRequest) {
+
+            },
+            success: function(data, textStatus) {
+                console.log("zhang...成功...."+data);
+                data=JSON.parse(data);
+                var objdata=data.body;
+                console.log(objdata);
+                console.log(objdata.length);
+                for(var i=0;i<objdata.length;i++){                   
+                    var branches = "<li><span class='folder'>"+objdata[i].firstMenuName+"</span><ul>" ;
+                    //console.log(objdata[i].secondLevelMenu[0].name);
+                    if(objdata[i].secondLevelMenu){
+                        for(var j=0;j<objdata[i].secondLevelMenu.length;j++){
+                            var id = objdata[i].secondLevelMenu[j].id;
+                            var name = objdata[i].secondLevelMenu[j].name;
+                            var url = objdata[i].secondLevelMenu[j].url;
+                            var branche2 ="<li id="+objdata[i].secondLevelMenu[j].id+"><span class='file'><a href='"+url+"' target='main'>"+name+"</a></span></li>"; //在<span>中添加了<a>
+                            branches=branches+branche2;
+                            /*console.log("---------------<")
+                            console.log(objdata[i].secondLevelMenu[j].id);*/
+
+                        }
+//                        console.log(branches);
+                    }
+                    branches=$(branches).appendTo("#browser");
+                    $("#browser").treeview({
+                        add: branches
+                    });
+                }
+                var testTree='<li><div class="hitarea collapsable-hitarea"></div><span class="folder">客户信息管理</span>'
+								+'<ul id="folder21">'
+								+	'<li><span class="file"><a href="system-manager/customInfo/custom-add.html" target="main">新增客户</a></span></li>'
+								+	'<li><span class="file">批量导入</span></li>'
+								+	'<li><span class="file"><a href="system-manager/customInfo/custom_manage.html" target="main">客户列表</a></span></li>'						
+								+'</ul>'
+						    +'</li>'
+				$("#1007").replaceWith(testTree); 
+				$("#browser").treeview();
+                /*赋予左侧菜单树点击事件*/
+						$("#browser a").click(function(){
+							//alert($(this).prop("id"));
+							//urlLocation($(this).prop("id"));
+							$("#browser a").css("color",'');
+							$(this).css("color",'blue');
+						});
+
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //timeout也会进入
+                console.log("zhang...失败....");
+            },
+            complete: function(XMLHttpRequest, textStatus) {
+                if(textStatus === 'timeout'){
+                }
+            }
+        });
+    }
+    function nextMenu(id) {
+        console.log(id);
+        if("1018" == id) {
+            window.location.href="floor_info.html";
+        }
+    }
+    $(document).ready(function(){
+        $(' a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+
+        /*点击导航标签跳转到各模块页面*/
+        $(".nav-tabs li a").click(function(){
+            console.log($(this).attr("href"));
+            var indexflag;
+            indexflag=$(this).attr("href");
+            if(indexflag){
+                switch (indexflag){
+                    case "#Indoor_location":
+                        window.location.href="Indoor_location.html";
+                        break;
+                    case "#Outdoor_location":
+                        window.location.href="Outdoor_location.html";
+                        break;
+                    case "#Video_surveillance":
+                        window.location.href="Video_surveillance.html";
+                        break;
+                    case "#Wait_processing":
+                        window.location.href="Wait_processing.html";
+                        break;
+                    case "#Event_log":
+                        window.location.href="Event_log.html";
+                        break;
+                    case "#system_management":
+                        window.location.href="system_management.html";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+
+
+    });
+</script>
+</body>
+</html>

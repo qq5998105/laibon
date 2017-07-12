@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>手表管理</title>
+		<link rel="stylesheet" href="../../css/common/bootstrap.min.css">
+		<link rel="stylesheet" href="../../css/common/jquery-ui.css">	
+		<link rel="stylesheet" href="../../css/common/Watchmanage.css">
+		<!--datepicker-->
+		<link rel="stylesheet" type="text/css" href="../../css/common/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../css/common/icon.css">
+		<link rel="stylesheet" type="text/css" href="../../css/common/demo.css">		
+		<!--datepicker-->
+		<script src="../../js/plugins/jquery-1.10.2.min.js"></script>
+		<script src="../../js/plugins/bootstrap.min.js"></script>
+		<script src="../../js/plugins/jquery-ui.js"></script>				
+		<script src="../../js/apps/watch_manage.js"></script>
+		<script src="../../js/apps/all_person.js"></script>
+		<script type="text/javascript" src="../../js/plugins/jquery.min.js"></script>		
+		<script src="../../js/plugins/jqPaginator.js"></script>	
+		<script type="text/javascript" src="../../js/plugins/jquery.easyui.min.js"></script>
+		<script src="../../js/plugins/easyui-lang-zh_CN.js"></script>
+		
+	</head>
+	<body>
+			
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 col-sm-12 col-xs-12 column" style="margin-top: 15px;margin-bottom: 15px;">
+					<div class="row clearfix">
+						<div class="col-md-8 col-sm-8 col-xs-8 column">
+							<div id="beforesearch">
+								<input id="tags" type="text" class="form-control" value="" >
+							    <button type="button" id="searchIcon" class="btn btn-primary btn-sm"><img src="../../img/search.png" style="max-height: 20px;"/>搜索</button>
+							    <button type="button" id="senior_searchIcon" class="btn btn-primary btn-sm"><img src="../../img/search.png" style="max-height: 20px;"/>高级检索</button>
+						    </div>
+						    <!--高级检索-->
+						    <div id="searching">
+						    	
+								<div class="row clearfix">
+									<div class="">
+										<label class="">绑定人：</label>
+										<input type="text" id="inputName" />
+									</div>
+									<div class=" ">
+										<label class="">手机号码：</label>
+										<input type="text" id="inputPhonenum" />
+									</div>
+									
+									<div class=" ">
+										<label  class="">手机IMEI编号：</label>							    	
+								    	<input type="text"  id="inputImei" />
+									</div>
+								</div>
+								<div class="row ">
+								    <div class="col-md-4 col-sm-4 col-xs-4 column" id="mapLocationDIV">
+								    	<label  class="">开通时间：</label>							    	
+								    	<input id="openTime" type="text" class="easyui-datebox" data-options="buttons:buttons">
+								    	
+								    </div>
+									<div class="col-md-4 col-sm-4 col-xs-4 col-xs-offset-3 column" id="buildsDIV">
+										<label  class="">截止时间：</label>							    	
+								    	<input id="endTime" type="text" class="easyui-datebox" data-options="buttons:buttons">
+									</div>
+									<!--<div class="col-md-4 col-sm-4 column" id="floorsDIV">
+										<label  class="">楼层：</label>							    	
+								    	<select name="floors" class="floors">
+								    		<option value="">请选择</option>								    		
+								    	</select>
+									</div>-->
+								</div>
+								<div class="row ">
+								    <div class="col-md-12 col-sm-12 col-xs-12 column">
+								    	<button id="return" onclick="">返回</button>
+								    	<button id="hightSearch" onclick="">搜索</button>
+								    	<button id="reset" onclick="">重置</button>
+								    </div>						
+								</div>
+							</div>
+							<!--高级检索-->
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4 column">
+							<button type="button" id="deleteBtn" class="btn btn-primary btn-sm"><img src="../../img/delete.png" style="max-height: 20px;"/>删除</button>
+							<button type="button" id="addBtn" class="btn btn-primary btn-sm" data-toggle="modal" href="#modal-container-998611"><img src="../../img/add.png" style="max-height: 20px;"/>添加</button>
+							
+						</div>
+					</div>
+					<div class="row clearfix" >
+						<div class="col-md-12 col-sm-12 col-xs-12  column" style="margin-top: 15px;">
+							<div>手表列表：</div>
+							<table class="table table-bordered table-hover table-condensed">
+								<thead>
+									<tr>
+										<th>										
+											<input id="checkAll" type="checkbox" />											
+											序号
+											
+										</th>
+										<th>
+											手机号码
+										</th>
+										<th>
+											手机IMEI编号
+										</th>
+										<th>
+											绑定人
+										</th>
+										<th>
+											开通时间
+										</th>
+										<th>
+											在线状态
+										</th>
+										<th>
+											设备状态
+										</th>
+										<th>
+											操作
+										</th>
+									</tr>
+								</thead>
+								<tbody class="gridList">
+									<tr>
+										<td>											
+											<input name="subBox" type="checkbox" />
+												1
+										
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											未知
+										</td>
+										<td>
+											01
+										</td>
+										<td>
+											/04
+										</td>
+										<td>
+											01/04/2012
+										</td>
+										<td>
+											Default
+										</td>
+										<td>
+											<a href="">
+												<img src="../../img/delete.png"  style="max-width: 20px;"/>
+											</a>
+											<a href="#modal-container-998612" data-toggle="modal">
+												<img src="../../img/edit.png"  style="max-width: 20px;margin-left: 10px;"/>
+											</a>
+										</td>
+									</tr>									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-4 col-xs-4 column botoom-left">
+				每页
+				<select name="" id="row_num">
+					<option value="">10</option>
+					<option value="">5</option>					
+					<option value="">12</option>
+					<option value="">15</option>
+				</select>
+				行， 共<span id="totalnums">200</span>条
+			</div>
+			<div class="col-md-8 col-sm-8 col-xs-8 column botoom-right">
+				<ul class="pagination" id="pagination1"></ul>
+				<div class="botoom-right1">
+					跳转到
+					<span id="">
+						<input id="tag" type="text" class="form-control" value="" >
+						<button type="button" id="search-Go" class="btn btn-primary btn-sm">go</button>
+					</span>
+			
+				</div>
+			</div>
+			<!--“添加”按钮弹窗-->
+			<div class="row clearfix">
+				<div class="col-md-12 col-sm-12 col-xs-12 column">		
+					<div class="modal fade" id="modal-container-998611" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="myModalLabel">手表添加页面</h4>
+								</div>
+								<div class="modal-body">
+									<form class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="inputIP" class="col-sm-2 col-md-2 col-xs-2 control-label">*手机号码：</label>
+											<div class="col-sm-6 col-md-6  col-xs-6">
+												<input type="email" class="form-control" id="addphoneNum" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputIP" class="col-sm-2 col-md-2 col-xs-2 control-label">*手机IMEI编号：</label>
+											<div class="col-sm-6 col-md-6 col-xs-6">
+												<input type="email" class="form-control" id="addIMEI"/>
+											</div>
+										</div>
+										
+										
+										<div class="form-group" id="bound_person">
+											<label for="inputFloor" class="col-sm-2 col-md-2 col-xs-2 control-label">绑定人：</label>
+											<div class="col-sm-6 col-md-6 col-xs-6">
+												<input type="email" class="form-control" id="addperson" onfocus="$('#allperson').show()" />
+											</div>
+										</div>
+										
+									</form>
+									<div id="allperson">
+										<div class="allperson_top">
+											<label >*姓名：</label>											
+											<input type="" class="inputName" />
+											<button class="searchName">搜索</button>
+										</div>
+										<div id="allperson_mid">
+											<table class="table table-bordered table-hover table-condensed">
+												<thead>
+													<tr>
+														<th>
+															勾选
+														</th>
+														<th>
+															编号
+														</th>
+														<th>
+															姓名
+														</th>
+														<th>
+															出生年月
+														</th>
+													</tr>
+												</thead>
+												<tbody class="personGrid">
+													<tr>
+														<td>
+															1
+														</td>
+														<td>
+															TB - Monthly
+														</td>
+														<td>
+															01/04/2012
+														</td>
+														<td>
+															Default
+														</td>
+													</tr>
+													<tr class="success">
+														<td>
+															1
+														</td>
+														<td>
+															TB - Monthly
+														</td>
+														<td>
+															01/04/2012
+														</td>
+														<td>
+															Approved
+														</td>
+													</tr>
+													<tr class="error">
+														<td>
+															2
+														</td>
+														<td>
+															TB - Monthly
+														</td>
+														<td>
+															02/04/2012
+														</td>
+														<td>
+															Declined
+														</td>
+													</tr>
+													<tr class="warning">
+														<td>
+															3
+														</td>
+														<td>
+															TB - Monthly
+														</td>
+														<td>
+															03/04/2012
+														</td>
+														<td>
+															Pending
+														</td>
+													</tr>
+													<tr class="info">
+														<td>
+															4
+														</td>
+														<td>
+															TB - Monthly
+														</td>
+														<td>
+															04/04/2012
+														</td>
+														<td>
+															04/04/2012
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="allperson_footer">
+											<div class="list_page">
+												<ul class="pagination" id="pagination2"></ul>
+												<input type="" name="" id="pagego" value=""/>
+												<button class="pagesearch">GO</button>
+											</div>
+											<div class="list_num">
+												共100条记录
+											</div>
+										</div>
+										<div class="allperson_footerN">
+											<div id="butgrop">
+												<button class="allperson_sure">确定</button>
+											    <button class="allperson_cancel">取消</button>
+											</div>
+											
+										</div>	
+										
+										
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary" id="addHold">保存</button>
+								</div>
+							</div>
+			
+						</div>
+			
+					</div>
+			
+				</div>
+			</div>
+			<!--“添加”按钮弹窗-->
+			
+		</div>
+										
+			
+									
+		
+		<script type="text/javascript">
+			
+			var mywatch=null;
+			var personNum;
+			mywatch=new WATCH_MANAGE();
+			var all_person=null;
+			all_person=new ALL_PERSON();
+			$(document).ready(function(){
+				mywatch.init();	
+				$("#searching").hide();//高级搜索DIV隐藏
+				all_person.init();
+				
+				//console.log("当前页："+curPage+"每页显示："+perPapernum+"总共数据："+totalNUm+"总共页数："+totalPages+"当前页的第一条："+currentPageFirst+"当前页的最后一条："+currentPageLast);
+		    });
+			
+		    var buttons = $.extend([], $.fn.datebox.defaults.buttons);
+			buttons.splice(1, 0, {
+				text: 'MyBtn',
+				handler: function(target){
+					alert('click MyBtn');
+				}
+			});
+			
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,174 @@
+<html>
+<head>
+    <title>修改楼层信息</title>
+    <meta charset="utf-8"/>
+    <script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/apps/hashMap.js"></script>
+</head>
+
+<body>
+<h1 align="center">修改楼层信息</h1>
+<br><br>
+<table width="50%" border="1" align="center" cellpadding="3" cellspacing="1"
+       bordercolor="#ADADAD" style="border-collapse:collapse">
+    <tr>
+        <td>楼层编号：</td>
+        <td><input name='num' type='text' id='num' onchange="checkNum(event)" value=''/>
+            <span id="hintNum" style="color: red"></span></td>
+    </tr>
+    <tr>
+        <td>楼层名称：</td>
+        <td><input name='name' type='text' id='name' value=''/>
+            <span id="hintName" style="color: red"></span></td>
+    </tr>
+    <tr>
+        <td>所属楼宇：</td>
+        <td>
+            <select id="buildingNum">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" name="Submit" value="提交" onclick="save(event);"/>
+            <input type="reset" name="Submit2" value="重置"/></td>
+    </tr>
+</table>
+<script>
+    var floorId = localStorage["floorId"];
+    var buildName = localStorage["buildingName"];
+    var num = "";
+    var name = "";
+    var buildingNm = "";
+    var flag = true;
+    console.log(floorId);
+    HashMap.prototype.constructor = HashMap;
+    var hashmap = new HashMap();
+    $(function () {
+        var buildingNum = window.document.getElementById("buildingNum");
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/floor/selectAllBuilding.do",
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+                var str= "";
+                if(data.body.length > 0){
+                    var data = data.body;
+                    for (var j = 0; j < data.length; j++) {
+                        var buildingId = data[j].buildingId;
+                        var name = data[j].name;
+                        if(buildName == name){
+                            var bn = "<option>"+buildName+"</option>";
+                        }else{
+                            str += "<option id='buildingName'>"+name+"</option>";
+                        }
+                        hashmap.put(name,buildingId);
+                    }
+                    bn += str;
+                    buildingNum.innerHTML = bn;
+                }
+            }
+        });
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/floor/getUpdateFloor.do",
+            data:{"floorId":floorId},
+            dataType:"json",
+            type:"POST",
+            success:function (data) {
+                console.log(data);
+                if ("000" == data.statu){
+                    console.log("---->")
+                    $("#num").val(data.body.floorNum);
+                    $("#name").val(data.body.floorName);
+                    buildingNm = data.body.buildingName;
+                    num = $("#num").val();
+                    name = $("#name").val();
+                    console.log("---->")
+                }
+            },
+            error:function (data) {
+                console.log(floorId);
+                console.log(data);
+                    console.log("error");
+            }
+        });
+    });
+
+    function save(event) {
+        var buildindName=$("#buildingNum option:selected").text();
+        console.log(">>>>>>>>>");
+        console.log(buildindName == buildingNm);
+        console.log("<<<<<<<<<")
+        var buildingId =  hashmap.get(buildindName);
+        console.log(buildingId+" "+buildindName);
+        console.log("buildingId---->"+buildingId);
+        if ( document.getElementById("num").value==""||$("#name").val()=="")
+        {
+            alert('编号和名称不能为空!');
+            return;
+        }
+        if(num == $("#num").val() && name == $("#name").val() && buildingNm == buildindName){
+            $("#hintNum").html("");
+            $("#hintName").html("");
+            alert("未修改内容！");
+            window.location.href="floor_info.html";
+            return;
+        }
+        if(num == $("#num").val()){
+            $("#hintNum").html("编号未更改");
+        }else{
+            checkNum(event);
+            if(!flag) {
+                alert("请修改编号！");
+                return;
+            }
+        }
+        if(name == $("#name").val()) {
+            $("#hintName").html("名称未更改");
+        }
+        console.log($("#name").val());
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/floor/update.do",
+            data:{"floorId":floorId,"num":$("#num").val(),"name":$("#name").val(),"buildingId":buildingId},
+            dataType:"json",
+            type:"POST",
+            success:function (data) {
+                if("000" == data.statu) {
+                    alert("修改成功！");
+                    window.location.href="floor_info.html";
+                }
+            },
+            error:function (data) {
+                console.log("修改失败");
+            }
+        });
+    }
+    //楼层编号唯一性验证
+    function checkNum(event) {
+        $.ajax({
+            url: "http://192.168.1.224:8080/nursecare/floor/validateNum.do",
+            data:{"num":$("#num").val()},
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log($("#num").val());
+                console.log(data.statu);
+                if ("100" == data.statu) {
+                    $("#hintNum").html("编号已存在");
+                    flag = false;
+                    return;
+                }
+                flag = true;
+                $("#hintNum").html("");
+            },
+            error: function (data) {
+                alert("添加失败");
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
+
+

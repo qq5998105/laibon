@@ -1,0 +1,81 @@
+html,body{
+ padding:0px!important;
+ padding:100px 0px;
+ width:100%;
+ height:100%;
+ overflow:hidden;
+}
+.container{
+	height: 100%;
+}
+.page_top{
+    height: 30%;
+    margin-top: 5%;	
+}
+.page_topContent{
+	margin-top: 10%;
+}
+#watch_img{
+	background-image: url(../../img/watch.png);
+	height: 128px;
+    width: 128px;
+    margin: auto;
+}
+#watch_text{
+	text-align: center;
+    margin-top: 10px;
+}
+#watch_start{
+	margin-top: 5%;
+}
+#watch_online{
+	margin-top: 20px;
+}
+#watch_offline{
+	margin-top: 20px;
+}
+#IPC_img{
+	background-image: url(../../img/IPC.png);
+	height: 128px;
+    width: 128px;
+    margin: auto;
+}
+.page_midContent{
+	margin-top: 5%;
+}
+#IPC_text{
+	text-align: center;
+    margin-top: 10px;
+}
+#IPC_start{
+	margin-top: 5%;
+}
+#IPC_online{
+	margin-top: 20px;
+}
+#IPC_offline{
+	margin-top: 20px;
+}
+#alarm_img{
+	background-image: url(../../img/police.png);
+	height: 128px;
+    width: 128px;
+    margin: auto;
+}
+#alarm_text{
+	text-align: center;
+    margin-top: 10px;
+}
+#sos_alarm{
+	margin-top: 5%;
+}
+#Outofbounds_alarm{
+	margin-top: 20px;
+}
+
+.page_mid{
+    height: 30%;	
+}
+.page_foot{
+    height: 30%;	
+}

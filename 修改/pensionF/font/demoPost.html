@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>post例子</title>
+		<script src="../js/plugins/jquery-1.10.2.min.js"></script>
+	</head>
+	<body>
+		<div id="test"></div>
+		<script>
+			//var reqUrl="http://192.168.1.44:8082/nursecare/staff/addNewStaff.do";
+			var reqUrl="http://192.168.1.45:8082/lb/commdict/list.do";
+			
+			var testobj={};
+			var postobj={};
+			
+			testobj={
+				"num": "10010",
+				"name": "wjh",
+				"gender": 1,
+				"age": 23,
+				"idCardNum": "111112111111111",
+				"birthday": "1998-10-10",
+				"nation": 20,
+				"entryTime": "2016-10-10",
+				"marital": 1,
+				"phone": "1511256117025",
+				"stationId": 1,
+				"postId": 1,
+				"departmentId": 2
+			};
+			postobj={
+				"staff":JSON.stringify(testobj)
+			};
+			
+			//console.log({"staff":JSON.stringify(testobj)});
+			$.ajax({
+				url: reqUrl,
+				type: 'POST',
+				data:{"type":"nation"},				
+				//xml, html, script, json, jsonp, text
+				dataType: 'text',
+				timeout: 3000,
+				beforeSend: function(XMLHttpRequest) {
+			
+				},
+				success: function(data, textStatus) {
+					console.log(data);			
+					
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					//timeout也会进入                        	           	
+					console.log("zhang...失败....");
+				},
+				complete: function(XMLHttpRequest, textStatus) {
+					if(textStatus === 'timeout') {
+			
+					}
+				}
+			});	
+		</script>
+	</body>
+</html>

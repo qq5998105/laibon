@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>客户信息查看页面</title>
+    <link rel="stylesheet" href="../../../css/common/check.css">    
+    <script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+	<script src="../../../js/apps/common/configIp.js"></script>
+</head>
+<body>
+    <div class="container">
+        <table class="tableContent">
+            <thead><h1>客户信息查看页面</h1></thead>
+            <tbody>
+                <tr>
+                    <td class="case clear"><span id="attrName1"></span></td>
+                    <td class="case clear"><span class="text"><input id="patientId" type="text" class="inputMargin"></span></td>
+                    <td class="case clear"><span id="attrName2"></span></td>
+                    <td class="case clear"><span class="text"><input id="patientName" type="text" class="inputMargin"></span></td>
+                    <td class="case clear" style="width: 50px;"><span id="attrName3"></span></td>
+                    <td class="case clear">
+                        <input type="text" id="sex" value="" />
+                    </td>
+                    <td class="case clear"><span id="attrName4"></span></td>
+                    <td class="case clear" style="width: 150px;"><span class="text"><input id="idcardNum" type="text" class="inputMargin" style="width: 140px;"></span></td>
+                    <td class="photoCase clear">
+                        <div id="preview">
+                            
+                         </div>         
+                        <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="case2 clear"><span class="text"><span id="attrName5"></span></span></td>
+                    <td class="case2 clear"><span class="text"><input id="age" type="text" class="inputMargin"></span></td>
+                    <td class="case2 clear"><span id="attrName6"></span></td>
+                    <td class="case2 clear"><input id="dd"></td>
+                    <td class="case2 clear" style="width: 50px;"><span id="attrName7"></span></td>
+                    <td class="case2 clear">
+                        <input type="text" id="nation" value="" />
+                    </td>
+                    <td class="case2 clear"><span id="attrName8"></span></td>
+                    <td class="case2 clear" style="width: 150px;">
+                        <input type="text" id="marital"/>
+                    </td>
+                </tr>
+                <tr>
+                	<td class="nursingLevel clear">
+                		<span id="attrName9"></span>
+                	</td>
+                	<td class="case3 clear">
+                		<input id="custom-selectLevel" class="inputMargin" type="text">
+                	</td>
+                	<td class="case3 clear"><span id="attrName10"></span></td>
+                	<td class="case3 clear">
+                        <input id="service_Station" class="inputMargin" type="text">  
+                    </td>
+                    <td class="case3 clear"><span class="text"><span id="attrName12"></span></span></td>
+                    <td class="caseAddress clear">
+                        <p class="inputMargin">
+                            <input id="addr" class="homeAddress" type="text">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contact clear">客户联系信息</td>
+                </tr>
+                <tr>
+                    <td class="case2 clear"><span id="attrName11"></span></td>
+                    <td class="case2 clear"><span class="text"><input id="patientPhone" type="text" class="inputMargin"></span></td>
+                    <td class="case2 clear"><span id="attrName13"></span></td>
+                    <td class="case2 clear"><span class="text"><input id="familyName" type="text" class="inputMargin"></span></td>
+                    <td class="case2 clear"><span id="attrName14"></span></td>
+                    <td class="members clear"><span class="text"><input id="familyPhone" type="text" class="inputMargin"></span></td>
+                </tr>
+                <tr>
+                    <td class="contact clear">客户入院信息</td>
+                </tr>
+                <tr>
+                    <td class="case2 clear"><span class="text"><span id="attrName15"></span></span></td>
+                    <td class="case2 clear">
+                        <input type="text" id="buildingName" value="" />
+                    </td>
+                    <td class="case2 clear"><span id="attrName16"></span></td>
+                    <td class="case2 clear">
+                        <input id="floorName" type="text" />
+                    </td>
+                    <td class="case2 clear"><span id="attrName17"></span></td>
+                    <td class="case2 clear">
+                        <input type="text" id="roomName" value="" />
+                    </td>
+                    <td class="case2 clear"><span id="attrName18"></span></td>
+                    <td class="case2 clear">
+                        <input type="text" id="bedName" value="" />
+                    </td>
+                    <td class="case2 clear"><span id="attrName19"></span></td>
+                    <td class="case2 clear"><span class="text"><input type="text" id="admission" value="" /></span></td>
+                    <td class="case2 clear" style="width: 60px;"><span id="attrName20"></span></td>
+                    <td class="case2 clear" style="width:137px;border-right: 1px solid #595959;">
+                        <input id="staffNumName" class="inputMargin attendant" type="text" value="" style="width: 110px;"/>              
+                    </td>
+                </tr>
+                <tr class="contactAdd">
+                    <td class="contact clear">绑定设备 </td>
+                </tr>
+                <tr>
+                    <td class="case2 clear"><span class="text"><span id="attrName21"></span></span></td>
+                    <td class="case2 clear">
+                        <input type="text" id="typeName" value="" />
+                    </td>
+                    <td class="case2 clear"><span id="attrName22"></span></td>
+                    <td class="case2 clear"><span class="text"><input id="imei" type="text" class="inputMargin"></span></td>
+                    <td class="case2 clear"><span id="attrName23"></span></td>
+                    <td class="case2 clear"><span class="text"><input id="phoneNumber" type="text" class="inputMargin"></span></td>
+                    <td class="case2 clear"><span id="attrName24"></span></td>
+                    <td class="clear dialMode">
+                        <input type="text" id="SOStype" value="" />
+                    </td>      
+                    <!--<td class="case2 clear">*SOS报警号码</td>
+                    <td class="case2 last clear"><span><input type="text" name="" id="sosName"  style="width: 35px; margin-left:5px; " /> <input type="text" id="sosNumber"  style="width: 100px;" /></span>
+                    </td>-->
+                </tr>
+                <tr>
+                	<td class="alarmNumber clear"><span id="attrName25"></span></td>
+                    <td class="alarmNumber-content clear">
+                        <table id="Ttable" cellspacing="0" cellpadding="0" style="overflow: auto;" class="alarmNumber-list">
+                        	<tr>
+                        		<td>序号</td>
+                        		<td><span id="attrName26"></span></td>
+                        		<td>联系电话</td>
+                        		<td>亲情号码</td>
+<!--                        		<td class="deleteTd">...</td>-->
+                        	</tr>
+                        	<tr class="newTr">
+                        		<td><input type="text" id="" value="" /></td>
+                        		<td><input id="sosName" class="SOS-change-name SOS-change sosName" type="text" value="" /></td>
+                        		<td><input id="sosNumber" class="SOS-change-number SOS-change sosNumber" type="text" value="" /></td>
+                        		<td><input id="familyNum" type="text" id="familyNum" value="" /></td>
+                        		<!--<td class="deleteTd"></td>-->
+                        	</tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contact clear">健康信息</td>
+                </tr>
+                <tr id="healthInformation">
+                    <td class="case2 clear"><span class="text"><span id="attrName27"></span></span></td>
+                    <td class="case2 clear">
+                        <input type="text" id="bloodType" value="" />
+                    </td>
+                    <td class="case2 clear"><span id="attrName28"></span></td>
+                    <td class="case2 clear"><input type="text" id="mentalIllness" value="" /></td>
+                    <td class="case2 clear"><span id="attrName29"></span></td>
+                    <td class="case2 clear">
+                        <input type="text" name="" id="disabilityAbility" value="" />
+                    </td>
+                    <td class="case2 clear"><span id="attrName30"></span></td>
+
+                    <td class="case2 clear">
+                        <input type="text" id="disabledPeople" value="" />
+                    </td>
+                    <td class="case2 clear">*慢性病史 :</td>
+                    <td class="case2 last checkboxBtn clear">
+                        <p class="inputMargin">
+                        	<span type="text" value=""><input type="text" id="hypertension" value="" /></span>
+                        	<span type="text" value=""><input type="text" id="hyperlipidemia" value="" /></span>
+                        	<span type="text" value=""><input type="text" id="highBloodSugar" value="" /></span>
+                        	<span type="text" value=""><input type="text" id="highUricAcid" value="" /></span>
+                        	<span type="text" value=""><input type="text" name="" id="otherDiseases" value="" /></span></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="footer">
+            <button class="btn" id="backBtn">返 回</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+		
+		$("input").attr("readonly","readonly");       
+        function GetQueryString(name) {  
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
+			    var r = window.location.search.substr(1).match(reg);  //获取url中"?"符后的字符串并正则匹配
+			    var context = "";  
+			    if (r != null)  
+			         context = r[2];  
+			    reg = null;  
+			    r = null;  
+			    return context == null || context == "" || context == "undefined" ? "" : context;  
+		}
+        var pramUrl;
+       if(!GetQueryString("patientId")){
+       	 pramUrl=1;
+       }else{
+       	 pramUrl=GetQueryString("patientId");
+       }
+       
+       	// 查找客户的基础属性字段
+       	patAttr();
+	function patAttr() {
+        $.ajax({
+            url: window.localStorage["ip:port"]+'/nursecare/patAttrDef/list.do',
+            type: 'POST',
+            //xml, html, script, json, jsonp, text
+//          data:{
+//          	"cp":cp,
+//          	"ps":ps,
+//          	"searchmsg":searchmsg
+//          },
+            dataType: 'text',
+            timeout: 3000,
+            beforeSend: function(XMLHttpRequest) {
+
+            },
+            success: function(patAttr) {
+//          	var patAttrData1 =$.parseJSON(patAttr).body;
+//          	console.log(patAttrData1);
+            	var patAttrData =$.parseJSON(patAttr);
+//				console.log(patAttrData);
+				$("#attrName1").text(patAttrData.body[0].attrName);
+				$("#attrName2").text(patAttrData.body[1].attrName);
+				$("#attrName3").text(patAttrData.body[2].attrName);
+				$("#attrName4").text(patAttrData.body[3].attrName);
+				$("#attrName5").text(patAttrData.body[4].attrName);
+				$("#attrName6").text(patAttrData.body[5].attrName);
+				$("#attrName7").text(patAttrData.body[6].attrName);
+				$("#attrName8").text(patAttrData.body[7].attrName);
+				$("#attrName9").text(patAttrData.body[8].attrName);
+				$("#attrName10").text(patAttrData.body[9].attrName);
+				$("#attrName11").text(patAttrData.body[10].attrName);
+				$("#attrName12").text(patAttrData.body[11].attrName);
+				$("#attrName13").text(patAttrData.body[12].attrName);
+				$("#attrName14").text(patAttrData.body[13].attrName);
+				$("#attrName15").text(patAttrData.body[14].attrName);
+				$("#attrName16").text(patAttrData.body[15].attrName);
+				$("#attrName17").text(patAttrData.body[16].attrName);
+				$("#attrName18").text(patAttrData.body[17].attrName);
+				$("#attrName19").text(patAttrData.body[18].attrName);
+				$("#attrName20").text(patAttrData.body[19].attrName);
+				$("#attrName21").text(patAttrData.body[20].attrName);
+				$("#attrName22").text(patAttrData.body[21].attrName);
+				$("#attrName23").text(patAttrData.body[22].attrName);
+				$("#attrName24").text(patAttrData.body[23].attrName);
+				$("#attrName25").text(patAttrData.body[24].attrName);
+				$("#attrName26").text(patAttrData.body[25].attrName);
+				$("#attrName27").text(patAttrData.body[26].attrName);
+				$("#attrName28").text(patAttrData.body[27].attrName);
+				$("#attrName29").text(patAttrData.body[28].attrName);
+				$("#attrName30").text(patAttrData.body[29].attrName);
+				$("#attrName31").text(patAttrData.body[30].attrName);
+				$("#attrName32").text(patAttrData.body[31].attrName);
+				$("#attrName33").text(patAttrData.body[32].attrName);
+				$("#attrName34").text(patAttrData.body[33].attrName);
+				$("#attrName35").text(patAttrData.body[34].attrName);
+			
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+        });
+    }
+       
+       
+       
+         $.ajax({
+                url: window.localStorage["ip:port"]+'/nursecare/patient/selectOnePatient.do',
+                type: 'POST',
+                data:{"patientId":pramUrl},
+                dataType: 'text',
+                success: function(data) { 
+//             console.log(data);
+                  //console.log(dataobj);
+                  var dataobj=JSON.parse(data).body[0];
+                  
+                  	//客户编号
+                    $("#patientId").val(dataobj.patientId);
+                    //客户姓名
+                    $("#patientName").val(dataobj.patientName);
+                    //性别
+					$("#sex").val(dataobj.sex);
+					//民族
+					$("#nation").val(dataobj.nation);
+					//身份证号
+					$("#idcardNum").val(dataobj.idcardNum);
+					//年龄
+					$("#age").val(dataobj.age);
+					//出生日期
+					$('#dd').val(dataobj.birthday);	
+					//住院日期
+					$("#admission").val(dataobj.admissionDate);	
+					//护理级别
+					$("#custom-selectLevel").val(dataobj.levelName);	
+					//家庭住址
+					$("#addr").val(dataobj.addr);
+					//家人姓名
+					$("#familyName").val(dataobj.familyName);
+					//家人电话
+					$("#familyPhone").val(dataobj.familyPhone);
+					//客户联系电话
+					$("#patientPhone").val(dataobj.patientPhone);
+					//婚姻状况
+					$("#marital").val(dataobj.marital);
+					//楼栋的名称
+					$("#buildingName").val(dataobj.buildingName);
+					//楼层的名称
+					$("#floorName").val(dataobj.floorName);
+					//房间名称
+					$("#roomName").val(dataobj.roomName);
+					//床位名称
+					$("#bedName").val(dataobj.bedName);
+					//护理人员staffNumName
+					$("#bedName").val(dataobj.bedName);
+					//服务站名称
+					$("#stationName").val(dataobj.staffNumName);
+					if(dataobj.watchList){
+						//设备名称
+						$("#typeName").val(dataobj.watchList[0].type);
+						//imei号
+						$("#imei").val(dataobj.watchList[0].imei);
+						//sos呼叫方式
+						$("#sosType").val(dataobj.watchList[0].sosType);
+						//号码
+						$("#phoneNumber").val(dataobj.watchList[0].phoneNumber);
+					}
+					
+					//血型
+					$("#bloodType").val(dataobj.bloodType);
+					//高血糖
+					var highBloodSugar = dataobj.highBloodSugarId;
+					if (highBloodSugar===1){
+						$("#highBloodSugar").val("高血糖");					
+					}else{						
+					}
+					//高尿酸
+					var highUricAcid = dataobj.highUricAcidId;
+					if (highUricAcid===1){
+						$("#highUricAcid").val("高尿酸");					
+					}else{						
+					}
+					//高血脂
+					var hyperlipidemia = dataobj.hyperlipidemiaId;
+					if (hyperlipidemia===1){
+						$("#hyperlipidemia").val("高血脂");					
+					}else{						
+					}
+					//高血压
+					var hypertension = dataobj.hypertensionId;
+					if (hypertension===1){
+						$("#hypertension").val("高血压");					
+					}else{						
+					}
+					//其他症状
+					$("#otherDiseases").val(dataobj.otherDiseases);
+					
+					//失能情况
+					$("#disabilityAbility").val(dataobj.disabilityAbility);
+					//残疾情况
+					$("#disabledPeople").val(dataobj.disabledPeople);
+					//精神病史
+					$("#mentalIllness").val(dataobj.mentalIllness);
+					//照片
+					$("#preview").val(dataobj.photo);
+															
+					// sos报警电话  
+					if(dataobj.watchSettinglist){
+//						$("#序号").val(dataobj.watchSettinglist[0].sosName);
+						$("#sosName").val(dataobj.watchSettinglist[0].sosName);
+						$("#sosNumber").val(dataobj.watchSettinglist[0].sosNumber);
+						$("#familyNum").val(dataobj.watchSettinglist[0].familyNum);
+					}
+					
+                }
+
+            })
+         
+        //扩展属性
+	
+		$.ajax({
+                url: window.localStorage["ip:port"]+'/lb/patient/selectPatEx.do',
+                type: 'POST',
+                data:{num:"num"},
+                //xml, html, script, json, jsonp, text
+                dataType: 'text',
+                timeout: 3000,
+                beforeSend: function(XMLHttpRequest) {
+                },
+                success: function(data) {
+                    var resObj = $.parseJSON(data);
+                  
+                    $("#healthInformation").append("<tr id='extend'><td class='contact clear'>扩展信息</td></tr>");
+   					$("#extend").append("<tr id='extend_tr'></tr>");
+   					$("#extend_tr").append("<td class='extendTd'>"+resObj.body[0].attr_name+"</td><td class='extendInput'><input type='text'></td><td class='extendTd'>"+resObj.body[1].attr_name+"</td><td class='extendInput'><input type='text'></td><td class='extendTd'>"+resObj.body[2].attr_name+"</td><td class='extendInput'><input type='text'></td><td class='extendTd' style='width: 101px;'></td><td class='extendInput'></td>");
+   				
+                },
+
+            });
+         
+         
+         $("#backBtn").click(function(){
+         	history.go(-1);
+         });
+    </script>
+</body>
+</html>

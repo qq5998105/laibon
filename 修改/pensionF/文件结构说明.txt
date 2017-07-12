@@ -1,0 +1,50 @@
+Poject视图下的工程文件结构说明
+
+1.
+标准的maven-archetype-webapp项目
+
+2.
+src文件夹包含项目源代码
+main/java/为服务端源代码根目录
+test/java/为测试代码根目录
+webapp 前端代码根目录
+
+3.
+com.lb下包含服务端代码
+common中为封装的服务端相应信息代码和常量定义
+controller为mvc中的控制器
+service为业务层，使用接口和实现类的编码方式，接口名称以I来头，实现类存放在impl中
+model为视图层
+dao为持久层
+util提供各种工具类
+
+fw下包含本地系统与其他系统对接的代码和系统组件
+目前包括博冕定位标签对接、websocket组件
+
+resources/mappers 为持久层匹配的sql代码
+resources下
+    applicationContext*.xml为spring配置文件
+    datasource.properties为数据库配置文件
+    generatorConfig.xml mybaits自动生成器配置文件
+    logback.xml为日志配置文件
+
+tools generator插件依赖的jar包
+
+4.
+webapp 前端代码根目录
+    css 样式根目录
+        包含apps 应用采用的样式、common 通用样式
+    font前端页面根目录
+    img为静态图片
+    js 脚本根目录
+        apps为自己编写的js文件
+        plugins为第三方使用的js文件
+    WEB-INF为java web工程自带的目录，包含项目的部署描述符web.xml和根据工程添加的其他xml
+
+5.
+pom.xml maven项目的配置文件
+
+
+v1.0.0
+20170601
+xl

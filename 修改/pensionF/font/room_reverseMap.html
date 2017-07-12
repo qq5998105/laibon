@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页-室内定位</title>
+    <link rel="stylesheet" href="../css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common/jquery-ui.css">
+    <link rel="stylesheet" href="../css/common/main.css">
+
+    <link rel="stylesheet" href="../css/apps/room-map.css"/>
+
+    <script src="../js/plugins/jquery-1.10.2.min.js"></script>
+    <script src="../js/plugins/bootstrap.min.js"></script>
+    <script src="../js/plugins/bootstrap.min.js"></script>
+    <script src="../js/plugins/jquery-ui.js"></script>
+    <script src="../js/apps/Indoor_location.js"></script>
+
+    <script src="../js/plugins/map/openlayer/lib/OpenLayers.js"></script>
+    <script src="../js/apps/room-map.js"></script>
+    <script src="../js/plugins/sockjs/sockjs.min.js"></script>
+    <script src="../js/apps/websocketPush.js"></script>
+    <style type="text/css">
+
+        li{
+            list-style-type:none;
+        }
+
+        a:link{
+            text-decoration: none;
+        }
+
+        /*推送*/
+        #connect-container {
+            float: left;
+            width: 400px
+        }
+        #connect-container div {
+            padding: 5px;
+        }
+
+        #border p {
+            padding: 0;
+            margin: 0;
+        }
+
+        #reverseBtn{
+            background-color: #fff;
+            border-color: #fff;
+            height: 35px;
+            margin-left: 60px;
+            float: right;
+            color: black;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!--导航菜单各模块DIV-->
+<div id="myTabContent" class="tab-content" style="margin-top: 15px;">
+    <!--室内定位@面板-->
+    <div class="tab-pane fade in active" id="Indoor_location">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column" style="display: inline-flex;">
+							<span id="curefloor">
+								当前楼层：&nbsp;&nbsp;
+							</span>
+                    <select class="floor">
+
+                    </select>
+							<span>
+							<div class="input-group" style="width: 250px;margin-left: 10px;">
+                                <input id="tags" type="text" class="form-control" value="姓名/床位号" onfocus="if (value =='姓名/床位号'){value =''}"onblur="if (value ==''){value='姓名/床位号'}">
+                            </div>
+							</span>
+                    <button type="button" id="searchIcon" class="btn btn-primary btn-sm" ><img src="../img/search.png" style="max-height: 20px;"/>搜索</button>
+                    <button type="button" id="reverseBtn" class="btn btn-primary btn-sm"><img src="../img/reverse.png" style="max-height: 20px;"/>列表切换</button>
+                </div>
+            </div>
+
+            <!--室内地图开始-->
+            <div>
+                <div id="connect-container">
+                    <div>
+                        <button id="connect" onclick="connect();">Connect</button>
+                        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id='map'>
+
+            </div>
+
+            <div id="wrapper">
+                <div id="screen_xy"></div>
+                <div id="location">经纬度坐标</div>
+                <div id="scale"></div>
+                <div id="output"></div>
+            </div>
+
+            <div id="xystr">
+
+            </div>
+
+            <div id="nodelist">
+                <em>Click on the map to get feature info</em>
+            </div>
+            <!--室内地图结束-->
+
+
+        </div>
+    </div>
+    <!--室内定位@面板结束-->
+</div>
+
+<script>
+    var m=1;
+    var map, measureControls;
+    var markers,graphic1;
+
+    var graphic_new;
+    var popup2;
+    var marker;
+    var len;
+    var canvas;
+    var canvas_single;
+    var mark;
+
+    //推送的js部分
+    var ws = null;
+    var url = 'ws://' + window.location.host + '/websocket';
+
+    console.log("第一步");
+    //			第一步，最先执行
+    var indoor_location=null;
+    indoor_location=new INDOOR_LOCATION();//创建INDOOR_LOCATION()对象
+    indoor_location.init();                 //调用init()方法
+    //            第一步跳转调用init方法
+
+    $(document).ready(function(){
+        $(' a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+    });
+
+
+    function print(msg) {
+        console.log("从服务端接收的的消息为："+msg);
+        if(msg.indexOf("Server")!=-1||msg.indexOf("Sent")!=-1){
+            return;
+        }
+
+        var data=JSON.parse(msg);
+        console.log(data);
+
+        if(100==data.status){
+            console.log("该楼层此时无老人！！！");
+            removeMarker();
+            return;
+        }
+
+        console.log("长度为："+data.body.length);
+//		if(canvas[0]==""||canvas[0]==null){
+//			return;
+//		}
+        removeMarker();
+        getCurrentFloorAllElderINfo(data);
+    }
+
+    $("#reverseBtn").click(function(){
+
+        window.location.href="system-manager/IPC_manage.html";
+
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>客户信息修改页面</title>
+    <link rel="stylesheet" href="../../../css/common/custom_modify.css">    
+    <link rel="stylesheet" href="../../../css/common/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/common/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/common/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/common/demo.css">
+	<link rel="stylesheet" href="../../../js/plugins/font-awesome-4.7.0/css/font-awesome.css.css" />
+    <script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+	<script src="../../../js/plugins/bootstrap.min.js"></script>
+	<script src="../../../js/plugins/jquery-ui.js"></script>   
+    <script src="../../../js/apps/customModify.js"></script>   
+    <script src="../../../js/apps/common/configIp.js"></script>
+    <script type="text/javascript" src="../../../js/plugins/jquery.easyui.min.js"></script>
+    <script src="../../../js/plugins/easyui-lang-zh_CN.js"></script>
+
+</head>
+<body>
+       <div class="container">
+        <table class="tableContent">
+            <thead><h1>客户信息修改页面</h1></thead>
+            <tbody>
+                <tr>
+                    <td class="case clear"><span id="attrName1"></span></td>
+                    <td class="case clear"><span class="text"><input type="text" class="inputMargin" id="customer-number" required="required"></span></td>
+                    <td class="case clear"><span id="attrName2"></span></td>
+                    <td class="case clear"><span class="text"><input type="text" class="inputMargin" id="custom-name" required="required"></span></td>
+                    <td class="case clear" style="width: 50px;"><span id="attrName3"></span></td>
+                    <td class="case clear">
+                        <select class="inputMargin" id="custom-sex">
+                        	<option selected value="">--请选择--</option>
+                            <option value="1">男</option>
+                            <option value="0">女</option>
+                        </select>
+                    </td>
+                    <td class="case clear"><span id="attrName4"></span></td>
+                    <td class="case clear" style="width: 150px;"><span class="text"><input type="text" class="inputMargin" style="width: 140px;" id="custom-ID"></span></td>
+                    <td class="photoCase clear">
+                        <div id="preview">
+                            <button id="imghead" class="fileBtn" onclick="$('#previewImg').click();">添加照片</button>
+                         </div>         
+                        <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="case2 clear"><span id="attrName5"></span></td>
+                    <td class="case2 clear"><span class="text"><input type="text" class="inputMargin" id="custom-age"></span></td>
+                    <td class="case2 clear"><span id="attrName6"></span></td>
+                    <td class="case2 clear"><input id="_easyui_textbox_input1" type="text" class="easyui-datebox" required="required" style="width: 85px;height: 25px;margin-left: 5px;"></td>
+                    <td class="case2 clear" style="width: 50px;"><span id="attrName7"></span></td>
+                    <td class="case2 clear">
+                        <select id="national" class="inputMargin"></select>
+                    </td>
+                    <td class="case2 clear"><span id="attrName8"></span></td>
+                    <td class="case2 clear" style="width: 150px;">
+                        <select class="inputMargin" id="custom-marriage">
+                        	<option selected value="">--请选择--</option>
+                            <option value="1">已婚</option>
+                            <option value="0">未婚</option>
+                            <option value="2">离异</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                	<td class="nursingLevel clear">
+                		<span id="attrName9"></span>
+                	</td>
+                	<td class="case3 clear">
+                		<select id="custom-selectLevel" class="inputMargin" name="">
+                			<option value="">--请选择--</option>
+                		</select>
+                	</td>
+                	<td class="case3 clear"><span id="attrName10"></span></td>
+                	<td class="case3 clear">
+                        <select id="service_Station" class="inputMargin">  
+                        	<option selected value="">--请选择--</option>
+                        </select>
+                    </td>
+                    <td class="case3 clear"><span id="attrName12"></span></td>
+                    <td class="caseAddress clear">
+                        <p class="inputMargin">
+                            <input class="homeAddress" id="custom-address" type="text">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contact clear">客户联系信息</td>
+                </tr>
+                <tr>
+                    <td class="case2 clear"><span id="attrName11"></span></td>
+                    <td class="case2 clear"><span class="text"><input type="text" class="inputMargin" id="custom-phone"></span></td>
+                    <td class="case2 clear"><span id="attrName13"></span></td>
+                    <td class="case2 clear"><span class="text"><input type="text" class="inputMargin" id="custom-Fname"></span></td>
+                    <td class="case2 clear"><span id="attrName14"></span></td>
+                    <td class="members clear"><span class="text"><input type="text" class="inputMargin" id="custom-Fphone"></span></td>
+                </tr>
+                <tr>
+                    <td class="contact clear">客户入院信息</td>
+                </tr>
+                <tr>
+                    <td class="case2 clear"><span id="attrName15"></span></td>
+                    <td class="case2 clear">
+                        <select id="buildingId" class="inputMargin">
+                        	<option selected value="">--请选择--</option>
+                        </select>
+                    </td>
+                    <td class="case2 clear"><span id="attrName16"></span></td>
+                    <td class="case2 clear">
+                        <select id="floor_name" class="inputMargin">
+                        	<option selected value="">--请选择--</option>
+                        </select>
+                    </td>
+                    <td class="case2 clear"><span id="attrName17"></span></td>
+                    <td class="case2 clear">
+                        <select id="room_name" class="inputMargin">
+                        	<option selected value="">--请选择--</option>
+                        </select>
+                    </td>
+                    <td class="case2 clear"><span id="attrName18"></span></td>
+                    <td class="case2 clear">
+                        <select class="inputMargin" id="bedNum">
+                        	<option selected value="">--请选择--</option>
+                        </select>
+                    </td>
+                    <td class="case2 clear"><span id="attrName19"></span></td>
+                    <td class="case2 clear" style="width: 140px;"><span class="text"><input  type="text" id="_easyui_textbox_input2" class="easyui-datebox" required="required" style="width: 85px;height: 25px;margin-left: 5px"></span></td>
+                    <td class="case2 clear" style="width: 60px;"><span id="attrName20"></span></td>
+                    <td class="case2 clear" style="width:97px;border-right: 1px solid #595959;">
+                        <input class="inputMargin attendant" type="text" name=""  value="" /><button id="addSOS">...</button>
+                        <div id="allperson">
+                        	<div class="allperson_top">
+                        		<label>*姓名：</label>
+                        		<input type="" class="inputName" id="easySearch" />
+                        		<button class="searchName">搜索</button>
+                        	</div>
+                        	<div id="allperson_mid">
+                        		<table class="allperson_table custom_table" cellspacing="0" cellpadding="0">
+                        			<thead>
+                        				<tr>
+                        					<td>勾选</td>
+                        					<td>员工编号</td>
+                        					<td>姓名</td>
+                        					<td>出生年月</td>
+                        				</tr>
+                        			</thead>
+                        			<tbody class="personGrid">
+                        			</tbody>
+                        		</table>
+                        	</div>
+                        	<div class="allperson_footer">
+                        		<div class="list_page">
+                        			<ul class="pagination" id="pagination2"></ul>
+                        			<span id="first-page" class="fa fa-step-backward"></span>
+                        			<span id="prev-page" class="fa fa-play fa-rotate-180"></span>
+                        			<input type="" name="" id="pagego" value="" />
+                        			<span class="totalPage"></span>
+                        			<span id="next-page" class="fa fa-play"></span>
+                        			<span id="last-page" class="fa fa-step-forward"></span>
+                        			
+                        		</div>                        		
+                        		
+                        		<span class="list_num"></span>
+                        	</div>
+                        	
+                        </div>
+                    </td>
+                </tr>
+                <tr class="contactAdd">
+                    <td class="contact clear">绑定设备</td>
+                </tr>
+                <tr>
+                    <td class="case2 clear"><span id="attrName21"></span></td>
+                    <td class="case2 clear">
+                        <select class="inputMargin" id="deviceType">
+                        	<option selected value="">--请选择--</option>
+                            <option value="0">手表</option>
+                            <option value="1">手环</option>
+                        </select>
+                    </td>
+                    <td class="case2 clear"><span id="attrName22"></span></td>
+                    <td class="case2 clear"><span class="text"><input type="text" class="inputMargin" id="imeiNum"></span></td>
+                    <td class="case2 clear"><span id="attrName23"></span></td>
+                    <td class="case2 clear"><span class="text"><input type="text" class="inputMargin" id="phoneNumber"></span></td>
+                    <td class="case2 clear"><span id="attrName24"></span></td>
+                    <td class="clear dialMode">
+                        <select class="inputMargin" id="SOStype">
+                            <option value="0">拨打一次</option>
+                            <option value="1">多次拨打</option>
+                        </select>
+                    </td>      
+                </tr>
+                <tr>
+                	<td class="alarmNumber clear"><span id="attrName25"></span></td>
+                    <td class="alarmNumber-content clear">
+                        <table id="Ttable" cellspacing="0" cellpadding="0" style="overflow: auto;" class="alarmNumber-list">
+                        	<tr>
+                        		<td>序号</td>
+                        		<td><span id="attrName26"></span></td>
+                        		<td>联系电话</td>
+                        		<td>亲情号码</td>
+                        		<td class="deleteTd"><button class="addRow">添加</button></td>
+                        	</tr>
+                        	<tr class="newTr">
+                        		<td>1</td>
+                        		<td><input id="sosName" class="SOS-change-name SOS-change" type="text" value="" /></td>
+                        		<td><input id="sosNumber" class="SOS-change-number SOS-change" type="text" value="" /></td>
+                                <td id="switchBtn">
+                                    <img id="closeBtn" src="../../../img/closeBtn.jpg" style="display: block"/>
+                                    <img id="openBtn" src="../../../img/openBtn.jpg" style="display: none"/>
+                                </td>
+                        		<td class="deleteTd"></td>
+                        	</tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contact clear">健康信息</td>
+                </tr>
+                <tr id="healthInformation">
+                    <td class="case2 clear"><span class="text"><span id="attrName27"></span></span></td>
+                    <td class="case2 clear">
+                        <select class="inputMargin" id="bloodType">
+                        	<option selected value="">--请选择--</option>
+                            <option value="1">A型</option>
+                            <option value="2">B型</option>
+                            <option value="4">O型</option>
+                            <option value="3">AB型</option>
+                        </select>
+                    </td>
+                    <td class="case2 clear"><span id="attrName28></span></td>
+                    <td class="case2 clear"><span class="radioBtn"><input type="radio" id="disabled_PeopleY" name="yes"> 有 <input type="radio" id="disabled_PeopleN" name="yes"> 无</span></td>
+                    <td class="case2 clear"><span id="attrName29"></span></td>
+                    <td class="case2 clear">
+                        <select class="inputMargin" id="inputDisable">
+                        	<option selected value="">--请选择--</option>
+                            <option value="0">无</option>
+                            <option value="1">轻度失能</option>
+                            <option value="2">中度失能</option>
+                            <option value="3">高度失能</option>
+                        </select>
+                    </td>
+                    <td class="case2 clear"><span id="attrName30"></span></td>
+
+                    <td class="case2 clear">
+                        <select class="inputMargin" id="inputDeformity">
+                        	<option selected value="">--请选择--</option>
+                            <option value="0">无</option>
+                            <option value="1">轻度残疾</option>
+                            <option value="2">中度残疾</option>
+                            <option value="3">重度残疾</option>
+                        </select>
+                    </td>
+
+                    <td class="case2 clear">*慢性病史 :</td>
+                    <td class="case2 last checkboxBtn clear">
+                        <p class="inputMargin">
+                                <input type="checkbox" id="check-hypertension"><span id="attrName31"></span>
+                                <input type="checkbox" id="check-hyperlipidemia"><span id="attrName32"></span>
+                                <input type="checkbox" id="check-highBloodSugar"><span id="attrName33"></span>
+                                <input type="checkbox" id="check-highUricAcid"><span id="attrName34"></span>
+                            <br>
+                                <input type="checkbox" id="check-otherDiseases">其他 : <input type="text">
+                        </p>
+                    </td>
+                </tr>
+                
+
+            </tbody>
+        </table>
+        <div class="footer">
+            <button class="btn" id="submitInfo">保 存</button>
+            <button class="btn" id="backBtn">返 回</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+    	var pramUrl;
+        $(document).ready(function(){       	
+        	if(!GetQueryString("patientid")){
+        		
+        		pramUrl=1;
+        	}else{
+        		
+        		pramUrl=GetQueryString("patientid");
+        		//alert(GetQueryString("patientid"));
+        	}
+        });
+        function GetQueryString(name) {  
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
+			    var r = window.location.search.substr(1).match(reg);  //获取url中"?"符后的字符串并正则匹配
+			    var context = "";  
+			    if (r != null)  
+			         context = r[2];  
+			    reg = null;  
+			    r = null;  
+			    return context == null || context == "" || context == "undefined" ? "" : context;  
+		}
+        //  图片上传预览    IE是用了滤镜。
+        function previewImage(file)
+        {
+            var MAXWIDTH  = 200;
+            var MAXHEIGHT = 145;
+            var div = document.getElementById('preview');
+            if (file.files && file.files[0])
+            {
+                div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+                var img = document.getElementById('imghead');
+                img.onload = function(){
+                    var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                    img.width  =  rect.width;
+                    img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+                    img.style.marginTop = rect.top+'px';
+                }
+                var reader = new FileReader();
+                reader.onload = function(evt){img.src = evt.target.result;}
+                reader.readAsDataURL(file.files[0]);
+            }
+            else //兼容IE
+            {
+                var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+                file.select();
+                var src = document.selection.createRange().text;
+                div.innerHTML = '<img id=imghead>';
+                var img = document.getElementById('imghead');
+                img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+                div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+            }
+        }
+        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+            var param = {top:0, left:0, width:width, height:height};
+            if( width>maxWidth || height>maxHeight ){
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+
+                if( rateWidth > rateHeight ){
+                    param.width =  maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                }else{
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+        
+        
+        $.ajax({
+                url: window.localStorage["ip:port"]+'/nursecare/patient/selectOnePatient.do',
+                type: 'POST',
+                data:{"patientId":GetQueryString("patientid")},
+                dataType: 'text',
+                success: function(data) {
+                console.log(JSON.parse(data).body[0]);
+                var dataobj=JSON.parse(data).body[0];
+                //客户编号
+                if(dataobj.patientId!=null){
+                    $("#customer-number").val(dataobj.patientId);
+                }
+                //客户名字
+                if(dataobj.patientName!=null){
+                    $("#custom-name").val(dataobj.patientName);
+                }
+                //性别
+                if(dataobj.marital!=null){
+					$("#custom-sex option").eq(0).text(dataobj.sex);
+				}		
+				//民族
+				if(dataobj.nation!=null){
+					$("#national option").eq(0).text(dataobj.nation);
+				}
+				//婚姻状况	
+				if(dataobj.marital!=null){
+					$("#custom-marriage option").eq(0).text(dataobj.marital);
+				}				
+				//身份证
+				if(dataobj.idcardNum!=null){
+					$("#custom-ID").val(dataobj.idcardNum);
+				}
+				//年龄
+				if(dataobj.age!=null){
+					$("#custom-age").val(dataobj.age);
+				}
+				//出生日期
+				if(dataobj.birthday!=null){
+//					console.log(dataobj.birthday);
+					var csrq = dataobj.birthday;
+					var year =  csrq.split("/");
+					var rightcsrq = year.join("-");		
+					$("#_easyui_textbox_input1").datebox("setValue",rightcsrq);	
+				}
+				//入院日期
+				if(dataobj.admissionDate!=null){
+					var admissionDate = dataobj.admissionDate;
+					var year =  admissionDate.split("/");
+					var rightcsrq = year.join("-");		
+					$("#_easyui_textbox_input2").datebox("setValue",rightcsrq);
+				}
+				//家庭住址
+				if(dataobj.addr!=null){
+					$("#custom-address").val(dataobj.addr);
+				}
+				//联系人姓名
+				if(dataobj.familyName!=null){
+					$("#custom-Fname").val(dataobj.familyName);
+				}
+				//联系人电话
+				if(dataobj.familyPhone!=null){
+					$("#custom-Fphone").val(dataobj.familyPhone);
+				}
+				//客户电话
+				if(dataobj.patientPhone!=null){
+					$("#custom-phone").val(dataobj.patientPhone);	
+				}
+				//护理级别custom-selectLevel
+				if(dataobj.patientPhone!=null){
+					$("#custom-selectLevel option").eq(0).text(dataobj.levelName);	
+				}
+				//服务站		
+				if(dataobj.stationName!=null){
+					$("#service_Station option").eq(0).text(dataobj.stationName);	
+				}		
+
+					//alert(dataobj.watchList[0]);
+				if(dataobj.watchList!=null){
+					//设备类型			
+					$("#deviceType option").eq(0).text(dataobj.watchList[0].type);									
+					//sos拨号类型		
+					$("#SOStype option").eq(0).text(dataobj.watchList[0].sosType);
+				}
+				
+				//血型		
+				if(dataobj.bloodType!=null){
+					$("#bloodType option").eq(0).text(dataobj.bloodType);	
+				}					
+				//残疾情况	
+				if(dataobj.disabledPeople!=null){
+					$("#inputDeformity option").eq(0).text(dataobj.disabledPeople);	
+				}		
+				
+				//失能情况				
+				if(dataobj.disabledPeople!=null){
+					$("#inputDisable option").eq(0).text(dataobj.disabilityAbility);	
+				}	
+				
+//				if(dataobj.watchList!=null){
+				//楼栋名称		
+				if(dataobj.buildingName!=null){
+						$("#buildingId option").eq(0).text(dataobj.buildingName);	
+					}
+
+				//楼层名称		
+				if(dataobj.floorName!=null){
+					$("#floor_name option").eq(0).text(dataobj.floorName);
+				}
+				//房间名称		
+				if(dataobj.roomName!=null){
+					$("#room_name option").eq(0).text(dataobj.roomName);
+				}
+				//床位名称	
+				if(dataobj.bedName!=null){
+					$("#bedNum option").eq(0).text(dataobj.bedName);
+				}	
+
+				//精神病史		$("input[name=jizai]:eq(0)")
+				if(dataobj.mentalIllnessId!=null){
+					var mentalIllness = dataobj.mentalIllnessId;
+					if (mentalIllness==1){
+						$("#disabled_PeopleY[name=yes]").attr("checked", "checked");					
+					}else{		
+						$("#disabled_PeopleN[name=yes]").attr("checked", "checked");
+					}
+				}
+				//IMEI 号码	
+				if(dataobj.watchList!=null){
+					$("#imeiNum").val(dataobj.watchList[0].imei);
+				}
+					
+				//报警号码
+				if(dataobj.watchList!=null){
+					$("#phoneNumber").val(dataobj.watchList[0].phoneNumber);
+				}
+				//获取图片
+				if(dataobj.photo!=null){
+					var imgsrc = dataobj.photo;
+//					$("#preview").append("<img src="+imgsrc+"/>");
+					$("#preview")[0].innerHTML = '<img src='+imgsrc+' id=imghead onclick=$("#previewImg").click()>'
+					$("#preview").on("click","img",function(){
+						
+					})
+				}
+
+				//高血糖
+				if(dataobj.highBloodSugarId!=null){
+					var highBloodSugar = dataobj.highBloodSugarId;
+					if (highBloodSugar==1){
+						$("#highBloodSugar").attr("checked", "checked");					
+					}else{						
+					}
+				}
+				//高尿酸
+				if(dataobj.highUricAcidId!=null){
+					var highUricAcid = dataobj.highUricAcidId;
+					if (highUricAcid===1){
+						$("#highUricAcid").attr("checked", "checked");					
+					}else{						
+					}
+				}
+				//高血脂
+				if(dataobj.hyperlipidemiaId!=null){
+					var hyperlipidemia = dataobj.hyperlipidemiaId;
+					if (hyperlipidemia===1){
+						$("#hyperlipidemia").attr("checked", "checked");				
+					}else{						
+					}
+				}
+				//高血压
+				if(dataobj.hypertensionId!=null){
+					var hypertension = dataobj.hypertensionId;
+					if (hypertension===1){
+						$("#hypertension").attr("checked", "checked");					
+					}else{						
+					}
+				}
+               	//其他症状
+               	if(dataobj.hypertensionId!=null){
+					$("#check-otherDiseases").val(dataobj.otherDiseases);
+				}
+               	
+               	//
+                if(dataobj.watchSettinglist!=null){
+                	if(dataobj.watchSettinglist[0]!=undefined){
+                		$("#sosName").val(dataobj.watchSettinglist[0].sosName);	               
+						$("#sosNumber").val(dataobj.watchSettinglist[0].sosNumber);	     
+						$("#sosFamily").val(dataobj.watchSettinglist[0].familyNumId);
+//						var sosFamilyData = dataobj.watchSettinglist[0].familyNumId;
+						if (sosFamilyData==1){
+							$("#openBtn").css("display","block");
+						}else{		
+							$("#closeBtn").css("display","block");
+						}
+	                var sosName=dataobj.watchSettinglist;
+	                var firstsosName = dataobj.watchSettinglist[0];
+	                $("#firstname").val(firstsosName.sosName);
+	                $("#firstnumber").val(firstsosName.sosNumber);
+	                var Ttable = $("#Ttable");
+	                for(var i = 1;i<sosName.length;i++){
+	                	$("#Ttable").append("<tr class='newTr'><td></td><td><input type='text' id='sosName' class='SOS-change-name SOS-change' value='"+ sosName[i].sosName +"'/></td><td><input id='sosNumber' type='text' class='SOS-change-number SOS-change' value='"+ sosName[i].sosNumber +"' /></td><td><button>亲情号</button></td><td class='deleteTd'><button class='deleteRow'>删除</button></td></tr>")	                	
+	                }							
+                }
+            }
+    	}
+
+    })
+    </script>
+</body>
+</html>

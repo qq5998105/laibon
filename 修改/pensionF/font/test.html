@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>test</title>
+		<link rel="stylesheet" href="../css/common/jquery-ui.css">
+		<!--<link rel="stylesheet" href="css/main.css">-->
+		<script src="../js/plugins/jquery-1.10.2.min.js"></script>
+		<script src="../js/plugins/jquery-ui.js"></script>
+	</head>
+	<body>
+		<div class="ui-widget">
+			<label for="tags">Tags: </label>
+			<input id="tags">
+		</div>
+		
+		<script>
+			  $(function() {
+			    var availableTags = [
+			      "ActionScript",
+			      "AppleScript",
+			      "Asp",
+			      "BASIC",
+			      "C",
+			      "C++",
+			      "Clojure",
+			      "COBOL",
+			      "ColdFusion",
+			      "Erlang",
+			      "Fortran",
+			      "Groovy",
+			      "Haskell",
+			      "Java",
+			      "JavaScript",
+			      "Lisp",
+			      "Perl",
+			      "PHP",
+			      "Python",
+			      "Ruby",
+			      "Scala",
+			      "Scheme"
+			    ];
+			    $( "#tags" ).autocomplete({
+			      source: availableTags
+			    });
+			  });
+       </script>
+	</body>
+</html>

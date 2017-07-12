@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>无线AP管理</title>
+		<link rel="stylesheet" href="../../css/common/bootstrap.min.css">
+		<link rel="stylesheet" href="../../css/common/jquery-ui.css">	
+		<link rel="stylesheet" href="../../css/common/Apmanage.css">
+		<script src="../../js/plugins/jquery-1.10.2.min.js"></script>
+		<script src="../../js/plugins/bootstrap.min.js"></script>
+		<script src="../../js/plugins/jquery-ui.js"></script>
+		<script src="../../js/plugins/jqPaginator.js"></script>			
+		<script src="../../js/apps/ap_manage.js"></script>
+	</head>
+	<body>
+			
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 col-sm-12 column" style="margin-top: 15px;margin-bottom: 15px;">
+					<div class="row clearfix">
+						<div class="col-md-8 col-sm-8 column">
+							<div id="beforesearch">
+								<input id="tags" type="text" class="form-control" value="IP地址/MAC地址/SSID名称" onfocus="if (value =='IP地址/MAC地址/SSID名称'){value =''}"onblur="if (value ==''){value='IP地址/MAC地址/SSID名称'}" >
+							    <button type="button" id="searchIcon" class="btn btn-primary btn-sm"><img src="../../img/search.png" style="max-height: 20px;"/>搜索</button>
+							    <button type="button" id="senior_searchIcon" class="btn btn-primary btn-sm"><img src="../../img/search.png" style="max-height: 20px;"/>高级检索</button>
+						    </div>
+						    <!--高级检索-->
+						    <div id="searching">
+								<div class="row clearfix">
+								    <div class="col-md-4 col-sm-4 column">
+								    	<label  class="">IP地址：</label>							    	
+								    	<input type="text"  id="input_ip" />
+								    </div>
+									<div class="col-md-4 col-sm-4 column">
+										<label  class="">MAC地址：</label>							    	
+								    	<input type="text"  id="input_mac" />
+									</div>
+									<div class="col-md-4 col-sm-4 column">
+										<label  class="">SSID名称：</label>							    	
+								    	<input type="text"  id="input_ssid" />
+									</div>
+									<div class="col-md-4 col-sm-4 column">
+										<label  class="">安装位置：</label>							    	
+								    	<input type="text"  id="input_location" />
+									</div>
+								</div>
+								<div class="row ">
+								    <div class="col-md-4 col-sm-4 column" id="mapLocationDIV">
+								    	<label  class="">地图：</label>							    	
+								    	<select name="mapLocation" class="mapLocation">
+								    		<option value="">请选择</option>
+								    		<option value="">室内地图</option>
+								    		<option value="">室外地图</option>								    		
+								    	</select>
+								    </div>
+									<div class="col-md-4 col-sm-4 column" id="buildsDIV">
+										<label  class="">楼栋：</label>							    	
+								    	<select name="floors" class="builds">
+								    		<option value="">请选择</option>							    		
+								    	</select>
+									</div>
+									<div class="col-md-4 col-sm-4 column" id="floorsDIV">
+										<label  class="">楼层：</label>							    	
+								    	<select name="floors" class="floors">
+								    		<option value="">请选择</option>								    		
+								    	</select>
+									</div>
+								</div>
+								<div class="row ">
+								    <div class="col-md-12 col-sm-12 column">
+								    	<button id="return" onclick="">返回</button>
+								    	<button id="hightSearch" onclick="">搜索</button>
+								    	<button id="reset" onclick="">重置</button>
+								    </div>						
+								</div>
+							</div>
+							<!--高级检索-->
+						</div>
+						<div class="col-md-4 col-sm-4 column">
+							<button type="button" id="deleteBtn" class="btn btn-primary btn-sm"><img src="../../img/delete.png" style="max-height: 20px;"/>删除</button>
+							<button type="button" id="addBtn" class="btn btn-primary btn-sm" data-toggle="modal" href="#modal-container-998611"><img src="../../img/add.png" style="max-height: 20px;"/>添加</button>
+							
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-md-12 col-sm-12  column" style="margin-top: 15px;">
+							<div>无线AP列表：</div>
+							<table class="table table-bordered table-hover table-condensed">
+								<thead>
+									<tr>
+										<th>										
+											<input id="checkAll" type="checkbox" />											
+											序号
+											
+										</th>
+										<th>
+											IP地址
+										</th>
+										<th>
+											MAC地址
+										</th>
+										<th>
+											SSID地址
+										</th>
+										<th>
+											楼栋
+										</th>
+										<th>
+											楼层
+										</th>
+										<th>
+											安装位置
+										</th>										
+										<th>
+											操作
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>											
+											<input name="subBox" type="checkbox" />
+												1
+										
+										</td>
+										<td>
+											TB - Monthly
+										</td>
+										<td>
+											未知
+										</td>
+										<td>
+											01
+										</td>
+										<td>
+											/04
+										</td>
+										<td>
+											01/04/2012
+										</td>
+										<td>
+											Default
+										</td>
+										<td>
+											<a href="">
+												<img src="../../img/delete.png"  style="max-width: 20px;"/>
+											</a>
+											<a href="#modal-container-998612" data-toggle="modal">
+												<img src="../../img/edit.png"  style="max-width: 20px;margin-left: 10px;"/>
+											</a>
+										</td>
+									</tr>									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 column botoom-left">
+				每页
+				<select name="" id="row_num">
+					<option value="">10</option>
+					<option value="">5</option>					
+					<option value="">12</option>
+					<option value="">15</option>
+				</select>
+				行， 共<span id="totalnums">200</span>条记录
+			</div>
+			<div class="col-md-9 column botoom-right">
+				<ul class="pagination" id="pagination1"></ul>
+				<div class="botoom-right1">
+					跳转到
+					<span id="">
+						<input id="tag" type="text" class="form-control" value="" >
+						<button type="button" id="search-Go" class="btn btn-primary btn-sm">go</button>
+					</span>
+			
+				</div>
+			</div>
+			<!--“添加”按钮弹窗-->
+			<div class="row clearfix">
+				<div class="col-md-12 column">		
+					<div class="modal fade" id="modal-container-998611" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="myModalLabel">IPC设备添加</h4>
+								</div>
+								<div class="modal-body">
+									<form class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="inputIP" class="col-sm-2 col-md-2 control-label">*IP地址：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="email" class="form-control" id="addIp" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputIP" class="col-sm-2 col-md-2 control-label">*MAC地址：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="email" class="form-control" id="addMac" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputIP" class="col-sm-2 col-md-2 control-label">SSID名称：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="email" class="form-control" id="addSsid" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inOrout_door" class="col-sm-2 col-md-2 control-label">地图：</label>
+											<div class="col-sm-6 col-md-6">
+												<select name="indoor_out" id="indoor_out">
+													<option value="">请选择</option>
+													<option value="0">室内</option>
+													<option value="1">室外</option>
+												</select>
+											</div>
+										</div> 
+										<div class="form-group" id="buildSelect">
+											<label for="inputBuilding" class="col-sm-2 col-md-2 control-label">楼栋：</label>
+											<div class="col-sm-6 col-md-6">
+												<select name="addBuild" class="addBuild">
+													<option value="">请选择</option>												
+												</select>
+											</div>
+										</div> 
+										<div class="form-group" id="floorSelect">
+											<label for="inputFloor" class="col-sm-2 col-md-2 control-label">楼层：</label>
+											<div class="col-sm-6 col-md-6">
+												<select name="addFloor" class="addFloor">
+													<option value="">请选择</option>													
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="Installation-location" class="col-sm-2 col-md-2 control-label">安装位置：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="email" class="form-control" id="addLocation" />
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary" id="addHold">保存</button>
+								</div>
+							</div>
+			
+						</div>
+			
+					</div>
+			
+				</div>
+			</div>
+			<!--“添加”按钮弹窗-->
+			<!--“编辑”弹窗-->
+			<div class="row clearfix">
+				<div class="col-md-12 column">		
+					<div class="modal fade" id="modal-container-998612" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="myModalLabel">IPC设备编辑</h4>
+								</div>
+								<div class="modal-body">
+									<form class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="inputIP" class="col-sm-2 col-md-2 control-label">IP地址：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="email" class="form-control" id="editIP" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputIP" class="col-sm-2 col-md-2 control-label">MAC地址：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="email" class="form-control" id="editMAC" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputIP" class="col-sm-2 col-md-2 control-label">SSID名称：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="email" class="form-control" id="editSSID" />
+											</div>
+										</div>
+										<div class="form-group" id="edit_buildeditBuildSelect">
+											<label for="inputBuilding" class="col-sm-2 col-md-2 control-label">楼栋：</label>
+											<div class="col-sm-6 col-md-6">
+												<select name="addBuild" id="editBuild">
+													<!--<option value="">请选择</option>-->												
+												</select>
+											</div>
+										</div> 
+										<div class="form-group" id="edit_floorSelect">
+											<label for="inputFloor" class="col-sm-2 col-md-2 control-label">楼层：</label>
+											<div class="col-sm-6 col-md-6">
+												<select name="addFloor" class="editFloor">
+													<option value="">请选择</option>													
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="Installation-location" class="col-sm-2 col-md-2 control-label">安装位置：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="" class="form-control" id="editLocation" />
+											</div>
+										</div>
+										<!--<div class="form-group">
+											<label for="inputFloor" class="col-sm-2 col-md-2 control-label" id="labelIPC">摄像头状态：</label>
+											<div class="col-sm-6 col-md-6">
+												<input type="password" class="form-control" id="editfloor" />
+											</div>
+										</div>-->
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal" id="editClose">关闭</button> 
+									<button type="button" class="btn btn-primary" id="editSave">保存</button>
+								</div>
+							</div>
+			
+						</div>
+			
+					</div>
+			
+				</div>
+			</div>
+			<!--“编辑”按钮弹窗-->
+		</div>
+										
+			
+									
+		
+		<script type="text/javascript">
+			var my_ap=null;
+			my_ap=new AP_MANAGE();			
+			$(document).ready(function(){
+				my_ap.init();				
+				//console.log("当前页："+curPage+"每页显示："+perPapernum+"总共数据："+totalNUm+"总共页数："+totalPages+"当前页的第一条："+currentPageFirst+"当前页的最后一条："+currentPageLast);
+		   });
+			
+		    
+		</script>
+		
+	</body>
+</html>

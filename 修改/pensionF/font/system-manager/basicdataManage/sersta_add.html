@@ -1,0 +1,163 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>添加服务站</title>
+</head>
+<script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+<script src="../../../js/apps/hashMap.js"></script>
+<body>
+
+<h1 align="center">添加服务站</h1>
+<br><br>
+<table width="50%" border="1" align="center" cellpadding="3" cellspacing="1" bordercolor="#ADADAD"
+       style="border-collapse:collapse">
+    <tr>
+        <td>编号：</td>
+        <td>
+            <input id="num" type="text" /><span id="hintNum" style="color: red">
+        </span>
+        </td>
+    </tr>
+    <tr>
+        <td>名称：</td>
+        <td>
+            <input name='name' type='text' id='name' /><span id="hintName"></span>
+        </td>
+    </tr>
+    <tr>
+
+        <td>所属楼层：</td>
+        <td>
+            <select id="buildingName">
+            </select>
+            <select id="floorName">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>操作:</td>
+        <td><input type="submit" name="Submit" value="提交" onClick="save(event);"/>
+            <input type="reset" name="Submit2" value="重置"/></td>
+    </tr>
+
+
+</table>
+<script>
+    var flag = true;
+    HashMap.prototype.constructor = HashMap;
+    var hashmapBuild = new HashMap();
+    var hashmapFloor = new HashMap();
+    var firstId;
+    function onlondBuild() {
+        var buildingName = window.document.getElementById("buildingName");
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/buildingAbout/findBuilding.do",
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+//                console.log(data.body.length);
+                var str= "";
+                if(data.body.length > 0){
+                    var data = data.body;
+                    for (var j = 0; j < data.length; j++) {
+                        var buildingId = data[j].buildingId;
+                        var name = data[j].name;
+                        str += "<option value='"+buildingId+"'>"+name+"</option>";
+                        hashmapBuild.put(name,buildingId);
+                        firstId = data[0].buildingId;
+                    }
+                    buildingName.innerHTML = str;
+                    onloadFloor(firstId);
+                }
+            }
+        });
+    }
+    function onloadFloor(id) {
+        var floorName = window.document.getElementById("floorName");
+
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/room/selectFloorById.do",
+            data:{"buildingId":id},
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+                console.log(data);
+                if("100" == data.statu){
+                    floorName.innerHTML = "";
+                    alert(data.msg);
+                    return;
+                }
+                var str= "";
+                if(data.body.length > 0){
+                    var data = data.body;
+                    for (var j = 0; j < data.length; j++) {
+                        var floorId = data[j].floorId;
+                        var name = data[j].name;
+                        str += "<option>"+name+"</option>";
+                        hashmapFloor.put(name,floorId);
+                    }
+                    floorName.innerHTML = str;
+                }
+            }
+        });
+    }
+    $(function () {
+        onlondBuild();
+        var buildingName = document.getElementById("buildingName");
+        if (buildingName && buildingName.addEventListener) {
+            buildingName.addEventListener('change',function (e) {
+                var ev = e || window.event;
+                var target = ev.target || ev.srcElement;
+//                console.log(target.value);
+                onloadFloor(target.value);
+            },false)
+        }
+    });
+    /*提交添加的数据*/
+    function save(event) {
+        var floorName=$("#floorName option:selected").text();
+        var floorId =  hashmapFloor.get(floorName);
+        var buildNam = $("#buildingName option:selected").text();
+        var buildId = hashmapBuild.get(buildNam);
+        console.log("-------->")
+        console.log(floorId+" "+buildId);
+        console.log("--------<");
+        if(""==$("#num").val() || "" == $("#name").val()) {
+                alert("编号名称不能为空！");
+                return;
+        }
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/SerSta/addNewSerSta.do",
+            type: "POST",
+            data:{"num":$("#num").val(),"name":$("#name").val(),"floorId":floorId,"buildingId":buildId},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if("000" == data.status){
+                    alert("添加成功");
+                    window.location.href="sersta_info.html";
+                    return;
+                }
+                if("102" == data.status){
+                    alert(data.msg);
+                    return;
+                }
+                if("100" == data.status){
+                    alert(data.msg);
+                    return;
+                }
+
+            },
+            error:function (data) {
+                console.log(">>>>>>>>>")
+                console.log(data);
+                console.log($("#num").val()+" "+$("#name").val()+" "+floorId);
+                console.log("error");
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
+

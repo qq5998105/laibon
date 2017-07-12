@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<form name="register1" id="register1">
+			<p><label for="runnername">RunnerName:</label>
+				<input id="runnername" name="runnername" type="text" placeholder="First and last name" required="required" autofocus="autofocus" />
+			</p>
+			<p><label for="phone">Tel #:</label>
+				<input id="phone" name="phone" type="text" pattern="\d{3}-\d{4}-\d{4}" placeholder="xxx-xxxx-xxxx" /></p>
+			<p><label for="emailaddress">E-mail:</label>
+				<input id="emailaddress" name="emailaddress" type="email" placeholder="For confirmation only" /></p>
+			<p><label for="dob">DOB:</label>
+				<input id="dob" name="dob" type="date" placeholder="MM/DD/YYYY" /></p>
+			<p>Count:<input type="number" id="count" name="count" min="0" max="100" step="10" /></p>
+			<p><label for="style">Shirt style:</label>
+				<input id="style" name="style" type="text" list="stylelist" title="Years of participation" autocomplete="off" /></p>
+			<datalist id="stylelist">
+		             <option value="White" label="1st Year"/>
+		             <option value="Gray" label="2nd - 4th Year"/>
+		             <option value="Navy" label="Veteran (5+ Years)"/>
+		            </datalist>
+		
+			<fieldset>
+				<legend>Expectations:</legend>
+				<p>
+					<label for="confidence">Confidence:</label>
+					<input id="confidence" name="level" type="range" onchange="setConfidence(this.value)" min="0" max="100" step="5" value="0" />
+					<span id="confidenceDisplay">0%</span></p>
+				<p><label for="notes">Notes:</label>
+					<textarea id="notes" name="notes" maxLength="100"></textarea></p>
+			</fieldset>
+		
+			<p><input type="submit" name="register" value="Submit" onclick=" checkForm()" /></p>
+		</form>
+	</body>
+</html>

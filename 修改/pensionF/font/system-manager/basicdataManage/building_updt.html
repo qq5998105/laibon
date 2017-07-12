@@ -1,0 +1,168 @@
+<html>
+<head>
+    <title>修改楼宇</title>
+    <meta charset="utf-8"/>
+    <script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+</head>
+
+<body>
+<h1 align="center">修改楼宇</h1>
+<br><br>
+<table width="50%" border="1" align="center" cellpadding="3" cellspacing="1"
+       bordercolor="#ADADAD" style="border-collapse:collapse">
+    <tr>
+        <td>楼宇编号：</td>
+        <td><input name='num' type='text' id='num' onchange="checkNum(event)" value=''/>
+            <span id="hintNum" style="color: red"></span></td>
+    </tr>
+    <tr>
+        <td>楼宇名称：</td>
+        <td><input name='name' type='text' id='name' onchange="checkName(event)" value=''/>
+            <span id="hintName" style="color: red"></span></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" name="Submit" value="提交" onclick="save(event);"/>
+            <input type="reset" name="Submit2" value="重置"/></td>
+    </tr>
+</table>
+<script>
+    var buildingId = localStorage["buildingId"];
+    var num = "";
+    var name = "";
+    var flag = false;
+    $(function () {
+        console.log("ID："+buildingId);
+        $("#buildingId").val(buildingId);
+
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/building/toUpdate.do",
+            data:{"buildingId":buildingId},
+            dataType:"json",
+            type:"POST",
+            success:function (data) {
+                console.log(data);
+                if ("000" == data.statu){
+                    console.log("---填值开始->")
+                    $("#num").val(data.body.num);
+                    $("#name").val(data.body.name);
+                    console.log("--填值结束-->");
+                    num = $("#num").val();
+                    name = $("#name").val();
+                    console.log("设置参数成功！");
+
+                }
+            },
+            error:function (data) {
+                console.log("error");
+            }
+
+        });
+
+    });
+
+
+    function save(event) {
+        console.log("save方法开始执行！");
+        console.log(num+" "+name);
+        if (document.getElementById("num").value == ""||$("#name").val() == "")
+        {
+            alert('编号和名称不能为空!');
+            return;
+        }
+        if(num == $("#num").val() && name == $("#name").val()){
+            $("#hintNum").html("");
+            $("#hintName").html("");
+            alert("未修改内容！");
+            window.location.href="building_info.html";
+            return;
+        }
+        if(num == $("#num").val()){
+            $("#hintNum").html("编号未更改");
+        }else{
+            checkNum(event);
+            if(!flag) {
+                alert("请修改编号！");
+                return;
+            }
+        }
+        if(name == $("#name").val()) {
+            $("#hintName").html("名称未更改");
+        }else {
+            checkName(event);
+            if(!flag) {
+                alert("请修改名称！");
+                return;
+            }
+        }
+
+        console.log($("#name").val());
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/building/update.do",
+            data:{"buildingId":buildingId,"num":$("#num").val(),"name":$("#name").val()},
+            dataType:"json",
+            type:"POST",
+            success:function (data) {
+                if("000" == data.statu) {
+                    alert("修改成功！");
+                    window.location.href="building_info.html";
+                }
+            },
+            error:function (data) {
+                console.log("修改失败");
+            }
+        });
+    }
+    function checkNum(event) {
+        $.ajax({
+            url: "http://192.168.1.224:8080/nursecare/building/validateNum.do",
+            data:{"num":$("#num").val()},
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log(data.statu);
+                if ("100" == data.statu) {
+                    $("#hintNum").html("编号已存在");
+                    flag = false;
+                    return;
+                }
+                $("#hintNum").html("");
+                flag = true;
+            },
+            error: function (data) {
+                console.log("error!>>>>");
+                console.log(data);
+                alert("添加失败");
+            }
+        });
+    }
+
+    function checkName(event) {
+        $.ajax({
+            url: "http://192.168.1.224:8080/nursecare/building/validateName.do" ,
+            data:{"name": $("#name").val()},
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log("---checkName---->");
+                console.log(data);
+                console.log($("#name").val());
+                console.log("<---Over----");
+                if ("100" == data.statu) {
+                    $("#hintName").html("名称已存在");
+                    flag = false;
+                    return;
+                }
+                flag = true;
+                $("#hintName").html("");
+            },
+            error: function (data) {
+                alert("添加失败");
+            }
+        });
+    }
+</script>
+</body>
+</html>
+
+

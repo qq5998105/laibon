@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+
+    <link rel="stylesheet" href="../css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common/main.css">
+    <link rel="stylesheet" href="../css/apps/room-map.css"/>
+    <script src="../js/plugins/jquery-1.10.2.min.js"></script>
+    <script src="../js/plugins/bootstrap.min.js"></script>
+    <style type="text/css">
+        body{
+            font-size: 10px;
+        }
+        #accordion{
+            width: 400px;
+            float: right;
+            /* margin-bottom: 10px; */
+            position: fixed;
+            bottom: 10px;
+            z-index: 9999;
+            right: 10px;
+        }
+        #panel_head{
+            background-color: #428bca;
+            /*display: flex;*/
+            display: -webkit-box;
+        }
+        a:link{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body  onload="initial()">
+<div id='map'>
+
+</div>
+
+<div id="wrapper">
+    <div id="screen_xy"></div>
+    <div id="location">经纬度坐标</div>
+    <div id="scale"></div>
+    <div id="output"></div>
+</div>
+<div id="xystr"></div>
+<div id="nodelist">
+    <!--<em>Click on the map to get feature info</em>-->
+</div>
+
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default" id="panelDefault">
+        <div class="panel-heading" id="panel_head">
+            <div class="panel-title" style="width:100px; color: aliceblue;">
+                报警列表
+            </div>
+            <div id="" style="width:100px;margin-left: 200px;">
+                <a data-toggle="collapse" data-parent="#accordion"
+                   href="#collapseOne">
+                    <img src="../img/minimize.png"/>
+                </a>
+                <a onclick="$('#panelDefault').hide();">
+                    <img src="../img/close.png"/>
+                </a>
+
+            </div>
+
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <table class="table">
+                    <!--<thead>
+                        <tr>
+                            <th>
+                                编号
+                            </th>
+                            <th>
+                                产品
+                            </th>
+                            <th>
+                                编号
+                            </th>
+                            <th>
+                                产品
+                            </th>
+                            <th>
+                                交付时间
+                            </th>
+                            <th>
+                                状态
+                            </th>
+                        </tr>
+                    </thead>-->
+                    <tbody>
+                    <tr>
+                        <td>
+                            1045号
+                        </td>
+                        <td>
+                            李小露
+                        </td>
+                        <td>
+                            门诊楼草坪
+                        </td>
+                        <td>
+                            sos报警
+                        </td>
+                        <td>
+                            2017/5/29
+                        </td>
+                        <td>
+                            <button style=" background-color: #2294f7;color: rgb(255, 255, 255);border-radius: 5px;">处理</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td>
+                            1045号
+                        </td>
+                        <td>
+                            李小露
+                        </td>
+                        <td>
+                            门诊楼草坪
+                        </td>
+                        <td>
+                            sos报警
+                        </td>
+                        <td>
+                            2017/5/29
+                        </td>
+                        <td>
+                            <button style=" background-color: #2294f7;color: rgb(255, 255, 255);border-radius: 5px;">处理</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td>
+                            1045号
+                        </td>
+                        <td>
+                            李小露
+                        </td>
+                        <td>
+                            门诊楼草坪
+                        </td>
+                        <td>
+                            sos报警
+                        </td>
+                        <td>
+                            2017/5/29
+                        </td>
+                        <td>
+                            <button style=" background-color: #2294f7;color: rgb(255, 255, 255);border-radius: 5px;">处理</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--视频播放-->
+<div class="camera_Vedio1">
+    <button type="button" id="closeVideo1" class="btn btn-primary btn-sm"><img src="../img/close.png" style="max-height: 20px;"/></button>
+    <video width="400px" height="300px" controls>
+        <source src=" " type="video/mp4"/>
+        当前浏览器不支持 video直接播放，点击这里下载视频：
+        <a href="myvideo.webm">下载视频</a>
+    </video>
+</div>
+<div class="camera_Vedio2">
+    <button type="button" id="closeVideo2" class="btn btn-primary btn-sm"><img src="../img/close.png" style="max-height: 20px;"/></button>
+    <video width="400px" height="300px" controls>
+        <source src=" " type="video/mp4"/>
+        当前浏览器不支持 video直接播放，点击这里下载视频：
+        <a href="myvideo.webm">下载视频</a>
+    </video>
+</div>
+<div class="camera_Vedio3">
+    <button type="button" id="closeVideo3" class="btn btn-primary btn-sm"><img src="../img/close.png" style="max-height: 20px;"/></button>
+    <video width="400px" height="300px" controls>
+        <source src=" " type="video/mp4"/>
+        当前浏览器不支持 video直接播放，点击这里下载视频：
+        <a href="myvideo.webm">下载视频</a>
+    </video>
+</div>
+<div class="camera_Vedio4">
+    <button type="button" id="closeVideo4" class="btn btn-primary btn-sm"><img src="../img/close.png" style="max-height: 20px;"/></button>
+    <video width="400px" height="300px" controls>
+        <source src=" " type="video/mp4"/>
+        当前浏览器不支持 video直接播放，点击这里下载视频：
+        <a href="myvideo.webm">下载视频</a>
+    </video>
+</div>
+<!--视频播放-->
+<script src="../js/plugins/map/openlayer/lib/OpenLayers.js"></script>
+<script src="../js/apps/room-map.js" charset="gbk"></script>
+<script src="../js/apps/getData.js" charset="GBK"></script>
+<script src="../js/apps/getSearchData.js"></script>
+<!--<script src="../js/apps/getFloorData.js"></script>-->
+<script>
+    var floorId=$(".floor",parent.document).val();
+    var bedNUm;
+
+    function parseCurrentFloorINfo(){
+        console.log("子页面方法：");
+    }
+
+    function btnClick() {
+        window.parent.test();
+    }
+
+    $(document).ready(function(){
+        //btnClick();
+        $('.floor',parent.document).change(function(){
+            console.log("子页面响应");
+            window.location.reload();//刷新页面
+            //console.log(window.parent.test());
+            //var data=window.parent.test();
+            /*对data处理*/
+//                alert(floorId);
+        });
+
+        $("#searchIcon",parent.document).click(function(){
+            /*搜索到的精确老人信息*/
+            window.location.reload();//刷新页面
+            bedNUm=$("#tags",parent.document).val();
+            bedNUm=bedNUm.split("：")[2];
+            console.log("此时的床位号是："+bedNUm);
+            var httpUrl='http://192.168.1.224:8080/nursecare/patient/findByBednum.do?bedNum=';
+//            SearchData();
+        });
+        $("#closeVideo1").click(function(){
+            $(".camera_Vedio1").hide();
+        });
+        $("#closeVideo2").click(function(){
+            $(".camera_Vedio2").hide();
+        });
+        $("#closeVideo3").click(function(){
+            $(".camera_Vedio3").hide();
+        });
+        $("#closeVideo4").click(function(){
+            $(".camera_Vedio4").hide();
+        });
+    });
+</script>
+</body>
+</html>

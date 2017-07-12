@@ -1,0 +1,39 @@
+body,html,#container{
+    height: 100%;
+    margin: 0px;
+}
+
+#container{
+    width:59%;
+    height: 80%;
+    /*border:1px solid red;*/
+    margin: 0 auto;
+}
+
+#zoomIn {
+    position:absolute;
+    left:10px;
+    bottom:120px;
+    width:60px;
+    height: 40px;
+    z-index: 160;
+    background-color: #008CFF;
+    color: #fff;
+    border-radius: 3px;
+    line-height: 40px;
+    text-align: center;
+}
+
+#zoomOut {
+    position:absolute;
+    left:10px;
+    bottom:60px;
+    width:60px;
+    height: 40px;
+    z-index: 160;
+    background-color: #008CFF;
+    color: #fff;
+    border-radius: 3px;
+    line-height: 40px;
+    text-align: center;
+}

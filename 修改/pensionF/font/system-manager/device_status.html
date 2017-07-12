@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>设备状态汇总</title>
+		<link rel="stylesheet" href="../../css/common/bootstrap.min.css">
+		<link rel="stylesheet" href="../../css/common/jquery-ui.css">
+		<link rel="stylesheet" href="../../css/common/deviceStatus.css">
+		<script src="../../js/plugins/jquery-1.10.2.min.js"></script>
+		<script src="../../js/plugins/bootstrap.min.js"></script>
+		<script src="../../js/plugins/jquery-ui.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<!--上-->
+			<div class="row clearfix page_top">
+				<div class="col-md-12 col-sm-12 col-xs-12 column">
+					<div class="row clearfix page_topContent">
+						<div class="col-md-3 col-sm-3 col-xs-3 column">
+							<div id="watch_img"></div>
+							<div id="watch_text">手表状态汇总</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6  column">
+							<div class="row clearfix">
+								<div class="col-md-12 col-sm-12 col-xs-12  column" id="watch_start">
+									启用总数量：300
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-12 col-sm-12 col-xs-12  column" id="watch_online">
+									在线数量：200
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-12 col-sm-12 col-xs-12  column" id="watch_offline">
+									离线数量：<span>100</span> <a href="status_collect.html?dev=watch">详细...</a>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--中-->
+			<div class="row clearfix page_mid">
+				<div class="col-md-12 col-sm-12 col-xs-12  column">
+					<div class="row clearfix page_midContent">
+						<div class="col-md-3 col-sm-3 col-xs-3  column ">
+							<div id="IPC_img"></div>
+							<div id="IPC_text">IPC摄像头汇总</div>							
+						</div>
+						<div class="col-md-9 col-sm-9 col-xs-9  column">
+							<div class="row clearfix">
+								<div class="col-md-12 col-sm-12 col-xs-12  column" id="IPC_start">
+									启用总数量：300
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-12 col-sm-12 col-xs-12  column" id="IPC_online">
+									在线数量：200
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-12 col-sm-12 col-xs-12 column" id="IPC_offline">
+									离线数量：<span>100</span> <a <a href="status_collect.html?dev=ipc">详细...</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--下-->
+			<div class="row clearfix" page_foot>
+				<div class="col-md-12 col-sm-12 col-xs-12 column">
+					<div class="row clearfix ">
+						<div class="col-md-3 col-sm-3 col-xs-3 column">
+							<div id="alarm_img"></div>
+							<div id="alarm_text">今日报警</div>
+							
+						</div>
+						<div class="col-md-9 col-sm-9 col-xs-9 column">
+							<div class="row clearfix">
+								<div class="col-md-12 col-sm-12 col-xs-12 column" id="sos_alarm">
+									<div class="col-md-5 col-sm-5 col-xs-5 column" id="">
+										SOS报警：<span>100</span> <a>详细...</a>
+									</div>
+									<div class="col-md-6 col-sm-6 col-xs-6 column" id="">
+										低电报警：<span>100</span> <a>详细...</a>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-12 col-sm-12 col-xs-12 column" id="Outofbounds_alarm">
+									<div class="col-md-5 col-sm-5 col-xs-5 column" id="">
+										越界报警：<span>100</span> <a>详细...</a>
+									</div>
+									<div class="col-md-6 col-sm-6 col-xs-6 column" id="">
+										失联报警：<span>100</span> <a>详细...</a>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			
+			$(document).ready(function(){
+				$.ajax({
+		            url: 'http://192.168.1.45:8082/lb/deviceStatus/index.do',
+		            type: 'POST',		            
+		            //xml, html, script, json, jsonp, text
+		            dataType:'text',
+		            timeout: 3000,
+		            beforeSend: function(XMLHttpRequest) {
+		                
+		            },
+		            success: function(data, textStatus) {
+		            	console.log("："+data);
+		            	var status=JSON.parse(data);
+		            	$('#watch_start').text("启用总数量："+status.totalwatchStart);
+						$('#watch_online').text("在线数量："+status.totalRecWatchOn);
+						$('#watch_offline span').text(+status.totalRecWatchOff);
+						$('#IPC_start').text("启用总数量："+status.totalIPC);
+						$('#IPC_online').text("在线数量："+status.totalRecIPCOn);
+						$('#IPC_offline span').text(+status.totalRecIPCOff);
+					   			   			   			    
+					    
+		            },
+		            error: function(XMLHttpRequest, textStatus, errorThrown) {
+		                //timeout也会进入                        	           	
+						console.log("zhang...失败....");							
+						
+		            },
+		            complete: function(XMLHttpRequest, textStatus) {
+		                if(textStatus === 'timeout'){
+		                    
+		                }
+		            }
+		        });
+		        
+			});
+		</script>
+	</body>
+</html>

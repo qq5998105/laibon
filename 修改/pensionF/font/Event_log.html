@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>首页</title>
+		<link rel="stylesheet" href="../css/common/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/common/main.css">
+		<script src="../js/plugins/jquery-1.10.2.min.js"></script>
+		<script src="../js/plugins/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<!--标签式的导航菜单-->
+		<div class="container">
+			<div class="row clearfix" id="titleRow">
+				<div class="col-md-12 column">
+					<ul class="nav nav-tabs" style="background-color: #428bca;">
+						<li >
+							<a href="#Indoor_location">室内定位</a>
+						</li>
+						<li>
+							<a href="#Outdoor_location">室外定位</a>
+						</li>
+						<li>
+							<a href="#Video_surveillance">视频监控</a>
+						</li>
+						<li>
+							<a href="#Wait_processing">等待处理</a>
+						</li>
+						<li class="active">
+							<a href="#Event_log">事件记录</a>
+						</li>
+						<li>
+							<a href="#system_management">系统管理</a>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</div>
+		
+		
+		<!--导航菜单各模块DIV-->
+		<div id="myTabContent" class="tab-content" style="margin-top: 15px;">												
+			<div class="container">		
+				<!--事件记录@面板-->
+				<div class="tab-pane fade in active" id="Event_log">
+					<p>事件记录@</p>
+				</div>
+				<!--事件记录@面板-->
+			</div>
+		</div>
+		<script>
+			$(document).ready(function(){
+				$(' a').click(function (e) {
+				  e.preventDefault()
+				  $(this).tab('show')
+				});
+                /*点击导航标签跳转到各模块页面*/               				
+				$(".nav-tabs li a").click(function(){
+					console.log($(this).attr("href"));
+					var indexflag;
+					indexflag=$(this).attr("href");
+					if(indexflag){
+						switch (indexflag){
+							case "#Indoor_location":
+							    window.location.href="Indoor_location.html";
+								break;
+							case "#Outdoor_location":
+							    window.location.href="Outdoor_location.html";
+								break;
+							case "#Video_surveillance":
+							    window.location.href="Video_surveillance.html";
+								break;
+							case "#Wait_processing":
+							    window.location.href="Wait_processing.html";
+								break;
+							case "#Event_log":
+							    window.location.href="Event_log.html";
+								break;
+							case "#system_management":
+							    window.location.href="system_management.html";
+								break;
+							default:
+								break;
+						}
+					}	
+				});
+			});
+		</script>
+	</body>
+</html>

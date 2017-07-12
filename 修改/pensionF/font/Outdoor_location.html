@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>室外定位</title>
+	<link rel="stylesheet" href="../css/common/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/common/main.css">
+	<link rel="stylesheet" href="../css/common/jquery-ui.css">
+	<link rel="stylesheet" href="../css/apps/out-map.css">
+
+	<script src="../js/plugins/jquery-1.10.2.min.js"></script>
+	<script src="../js/plugins/jquery-1.10.2.min.js"></script>
+	<script src="../js/plugins/bootstrap.min.js"></script>
+	<script src="../js/plugins/jquery-ui.js"></script>
+	<script src="../js/apps/outdoor_location.js"></script>
+
+	<style type="text/css">
+		body{
+			font-size: 10px;
+		}
+		#accordion{
+			width: 400px;
+			float: right;
+			/* margin-bottom: 10px; */
+			position: fixed;
+			bottom: 10px;
+			z-index: 9999;
+			right: 10px;
+		}
+		#panel_head{
+			background-color: #428bca;
+			/*display: flex;*/
+			display: -webkit-box;
+		}
+		a:link{
+			text-decoration: none;
+		}
+	</style>
+
+</head>
+<body>
+<!--标签式的导航菜单开始-->
+<div class="container">
+	<div class="row clearfix" id="titleRow">
+		<div class="col-md-12 column">
+			<ul class="nav nav-tabs" style="background-color: #428bca;">
+				<li >
+					<a href="#Indoor_location">室内定位</a>
+				</li>
+				<li class="active">
+					<a href="#Outdoor_location">室外定位</a>
+				</li>
+				<li>
+					<a href="#Video_surveillance">视频监控</a>
+				</li>
+				<li>
+					<a href="#Wait_processing">等待处理</a>
+				</li>
+				<li>
+					<a href="#Event_log">事件记录</a>
+				</li>
+				<li>
+					<a href="#system_management">系统管理</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!--标签式的导航菜单结束-->
+
+<!--导航菜单各模块DIV-->
+<div id="myTabContent" class="tab-content" style="margin-top: 15px;">
+	<!--室外定位@面板-->
+	<div class="tab-pane fade in active" id="Outdoor_location">
+		<div class="container">
+
+			<div class="row clearfix">
+				<div class="col-md-12 column" style="display: inline-flex;margin-bottom: 15px;">
+								<span>
+									<div class="input-group" style="width: 200px;margin-left: 10px;">
+										<input id="tags" type="text" class="form-control" value="姓名/手机号/床位号" onfocus="if (value =='姓名/手机号/床位号'){value =''}"onblur="if (value ==''){value='姓名/手机号/床位号'}">
+									</div>
+								</span>
+					<button type="button" id="searchIcon" class="btn btn-primary btn-sm" ><img src="../img/search.png" style="max-height: 20px;"/>搜索</button>
+					<button type="button" id="refreshBtn" class="btn btn-primary btn-sm" ><img src="../img/shuaxin.png" style="max-height: 20px;"/>刷新</button>
+					<button type="button" id="openAlarmlist" class="btn btn-primary btn-sm">打开报警列表</button>
+				</div>
+			</div>
+
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-default" id="panelDefault">
+					<div class="panel-heading" id="panel_head">
+						<div class="panel-title" style="width:100px; color: aliceblue;">
+							报警列表
+						</div>
+						<div id="" style="width:100px;margin-left: 200px;">
+							<a data-toggle="collapse" data-parent="#accordion"
+							   href="#collapseOne">
+								<img src="../img/minimize.png"/>
+							</a>
+							<a onclick="$('#panelDefault').hide();">
+								<img src="../img/close.png"/>
+							</a>
+						</div>
+					</div>
+
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<table class="table">
+								<!--<thead>
+                                    <tr>
+                                        <th>
+                                            编号
+                                        </th>
+                                        <th>
+                                            产品
+                                        </th>
+                                        <th>
+                                            编号
+                                        </th>
+                                        <th>
+                                            产品
+                                        </th>
+                                        <th>
+                                            交付时间
+                                        </th>
+                                        <th>
+                                            状态
+                                        </th>
+                                    </tr>
+                                </thead>-->
+								<tbody>
+								<tr>
+									<td>
+										1045号
+									</td>
+									<td>
+										李小露
+									</td>
+									<td>
+										门诊楼草坪
+									</td>
+									<td>
+										sos报警
+									</td>
+									<td>
+										2017/5/29
+									</td>
+									<td>
+										<button style=" background-color: #2294f7;color: rgb(255, 255, 255);border-radius: 5px;">处理</button>
+									</td>
+								</tr>
+
+								</tbody>
+								<tbody>
+								<tr>
+									<td>
+										1045号
+									</td>
+									<td>
+										李小露
+									</td>
+									<td>
+										门诊楼草坪
+									</td>
+									<td>
+										sos报警
+									</td>
+									<td>
+										2017/5/29
+									</td>
+									<td>
+										<button style=" background-color: #2294f7;color: rgb(255, 255, 255);border-radius: 5px;">处理</button>
+									</td>
+								</tr>
+
+								</tbody>
+								<tbody>
+								<tr>
+									<td>
+										1045号
+									</td>
+									<td>
+										李小露
+									</td>
+									<td>
+										门诊楼草坪
+									</td>
+									<td>
+										sos报警
+									</td>
+									<td>
+										2017/5/29
+									</td>
+									<td>
+										<button style=" background-color: #2294f7;color: rgb(255, 255, 255);border-radius: 5px;">处理</button>
+									</td>
+								</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<!--视频播放-->
+
+					<div class="camera_Vedio1">
+						<button type="button" id="closeVideo1" class="btn btn-primary btn-sm"><img src="../img/close.png" style="max-height: 20px;"/></button>
+						<video width="400px" height="300px" controls>
+							<source src=" " type="video/mp4"/>
+							<!--当前浏览器不支持 video直接播放，点击这里下载视频：-->
+							<a href="myvideo.webm">下载视频</a>
+						</video>
+					</div>
+					<div class="camera_Vedio2">
+						<button type="button" id="closeVideo2" class="btn btn-primary btn-sm"><img src="../img/close.png" style="max-height: 20px;"/></button>
+						<video width="400px" height="300px" controls>
+							<source src=" " type="video/mp4"/>
+							<!--当前浏览器不支持 video直接播放，点击这里下载视频：-->
+							<a href="myvideo.webm">下载视频</a>
+						</video>
+					</div>
+
+					<div class="camera_Vedio3">
+						<button type="button" id="closeVideo3" class="btn btn-primary btn-sm"><img src="../img/close.png" style="max-height: 20px;"/></button>
+						<video width="400px" height="300px" controls>
+							<source src=" " type="video/mp4"/>
+							<!--当前浏览器不支持 video直接播放，点击这里下载视频：-->
+							<a href="myvideo.webm">下载视频</a>
+						</video>
+					</div>
+
+					<div class="camera_Vedio4">
+						<button type="button" id="closeVideo4" class="btn btn-primary btn-sm"><img src="../img/close.png" style="max-height: 20px;"/></button>
+						<video width="400px" height="300px" controls>
+							<source src=" " type="video/mp4"/>
+							<!--当前浏览器不支持 video直接播放，点击这里下载视频：-->
+							<a href="myvideo.webm">下载视频</a>
+						</video>
+					</div>
+					<!--视频播放-->
+					<!--之前的iframe标签结束-->
+				</div>
+				<!--室外定位@面板结束-->
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--室外地图开始-->
+<div id="container" tabindex="0">
+	<div id="zoomIn">放大</div>
+	<div id="zoomOut">缩小</div>
+</div>
+<!--室外地图结束-->
+<script src="http://webapi.amap.com/maps?v=1.3&key=b062bd4a28c823a317c632cacfbfae5f"></script>
+<script>
+	var outdoor_location=null;
+	var marker_out;
+
+	outdoor_location=new OUTDOOR_LOCATION();
+	outdoor_location.init();
+	function test(){
+
+	}
+	$(document).ready(function(){
+		$(' a').click(function (e) {
+			e.preventDefault()
+			$(this).tab('show')
+		});
+		/*点击导航标签跳转到各模块页面*/
+		$(".nav-tabs li a").click(function(){
+			console.log($(this).attr("href"));
+			var indexflag;
+			indexflag=$(this).attr("href");
+			if(indexflag){
+				switch (indexflag){
+					case "#Indoor_location":
+						window.location.href="Indoor_location.html";
+						break;
+					case "#Outdoor_location":
+						window.location.replace("Outdoor_location.html");
+						break;
+					case "#Video_surveillance":
+						window.location.href="Video_surveillance.html";
+						break;
+					case "#Wait_processing":
+						window.location.href="Wait_processing.html";
+						break;
+					case "#Event_log":
+						window.location.href="Event_log.html";
+						break;
+					case "#system_management":
+						window.location.href="system_management.html";
+						break;
+					default:
+						break;
+				}
+			}
+		});
+	});
+
+</script>
+
+<!--室外地图相关js插件-->
+
+<script src="../js/apps/out-map.js"></script>
+<script src="../js/apps/out_websocketPush.js"></script>
+
+
+
+
+</body>
+</html>

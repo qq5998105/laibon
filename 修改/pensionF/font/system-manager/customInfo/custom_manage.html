@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>客户信息列表</title>
+		<link rel="stylesheet" href="../../../css/common/bootstrap.min.css">
+		<link rel="stylesheet" href="../../../css/common/jquery-ui.css">	
+		<link rel="stylesheet" href="../../../css/common/custommanage.css">
+		<!--datepicker-->
+		<link rel="stylesheet" type="text/css" href="../../../css/common/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/common/icon.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/common/demo.css">		
+		<!--datepicker-->
+		<script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+		<script src="../../../js/plugins/bootstrap.min.js"></script>
+		<script src="../../../js/plugins/jquery-ui.js"></script>				
+		<script src="../../../js/apps/custom_manage.js"></script>
+		<!--<script src="../../js/apps/all_person.js"></script>-->
+		<script type="text/javascript" src="../../../js/plugins/jquery.min.js"></script>		
+		<script src="../../../js/plugins/jqPaginator.js"></script>	
+		<script type="text/javascript" src="../../../js/plugins/jquery.easyui.min.js"></script>
+		<script src="../../../js/plugins/easyui-lang-zh_CN.js"></script>
+		
+	</head>
+	<body>
+			
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 col-sm-12 col-xs-12 column" style="margin-top: 15px;margin-bottom: 15px;">
+					<div class="row clearfix">
+						<div class="col-md-8 col-sm-8 col-xs-8 column">
+							<div id="beforesearch">
+								<input id="tags" type="text" class="form-control" value="" >
+							    <button type="button" id="searchIcon" class="btn btn-primary btn-sm"><img src="../../../img/search.png" style="max-height: 20px;"/>搜索</button>
+							    <button type="button" id="senior_searchIcon" class="btn btn-primary btn-sm"><img src="../../../img/search.png" style="max-height: 20px;"/>高级检索</button>
+						    </div>
+						    <!--高级检索-->
+						    <div id="searching">
+						    	
+								<div class="row clearfix">
+									<!--<table  border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<th>
+												<label class="">客户编号：</label>
+										        <input type="text" id="input_customNum" />
+											</th>
+											<th>
+												<label class="">客户姓名：</label>
+												<input type="text" id="input_customName" />
+											</th>
+										</tr>
+										<tr>
+											<td>
+												<label class="">身份证号码：</label>
+												<input type="text" id="input_customID" />
+											</td>
+											<td>
+												<label class="">联系手机号：</label>
+												<input type="text" id="input_customphoneNum" />
+											</td>
+										</tr>
+										
+									</table>-->
+									<div class="">
+										<label class="">客户编号：</label>
+										<input type="text" id="input_customNum" />
+										<label class="">客户姓名：</label>
+										<input type="text" id="input_customName" />
+									</div>
+									<div class=" ">
+										<label class="">身份证号码：</label>
+										<input type="text" id="input_customID" />
+										
+									</div>
+									<div class="">
+										<label  class="">联系手机号：</label>							    	
+								    	<input type="text"  id="input_customphoneNum"/>										
+									</div>
+									<div class=" ">										
+										<label class="">性别：</label>
+										<select name="floors" class="input_customSex">
+											<option value="1">男</option>
+											<option value="0">女</option>
+										</select>
+										<label  class="">年龄：</label>							    	
+								    	<input type="text"  id="input_age1"/>
+								    	<span id="">
+								    		---
+								    	</span>
+								    	<input type="text"  id="input_age2"/>
+									</div>
+									<div class=" ">										
+										<label class="">护理级别：</label>
+										<select name="" id="nursing_Level">
+											<option value="">请选择</option>
+											
+										</select>
+										<label class="">服务站：</label>
+										<select name="" class="service_Station">
+											<option value="">请选择</option>
+											
+										</select>										
+									</div>
+									<div class="">
+										<label class="">楼栋名称：</label>
+										<select name="build_name" class="build_name">
+											<option value="">请选择</option>
+										</select>
+										<label class="">楼层：</label>
+										<select name="" class="floor_name">
+											<option value="">请选择</option>
+										</select>
+									</div>
+								</div>
+								<div class="row ">
+								    <div class="col-md-12 col-sm-12 col-xs-12 column" id="inDate">
+								    	<label  class="">入院日期：</label>							    	
+								    	<input id="openTime" type="text" class="easyui-datebox" data-options="buttons:buttons">--
+								    	<input id="endTime" type="text" class="easyui-datebox" data-options="buttons:buttons">
+								    </div>								  
+									<!--<div class="col-md-4 col-sm-4 column" id="floorsDIV">
+										<label  class="">楼层：</label>							    	
+								    	<select name="floors" class="floors">
+								    		<option value="">请选择</option>								    		
+								    	</select>
+									</div>-->
+								</div>
+								<div class="row ">
+								    <div class="col-md-12 col-sm-12 col-xs-12 column" style="margin-top: 10px;">
+								    	<button id="return" onclick="">返回</button>
+								    	<button id="hightSearch" onclick="">搜索</button>
+								    	<button id="reset" onclick="">重置</button>
+								    </div>						
+								</div>
+							</div>
+							<!--高级检索-->
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4 column">
+							<button type="button" id="deleteBtn" class="btn btn-primary btn-sm"><img src="../../../img/delete.png" style="max-height: 20px;"/>删除</button>
+							<button type="button" id="addBtn"><img src="../../../img/add.png" style="max-height: 20px;"/>添加</button>
+							
+						</div>
+					</div>
+					<div class="row clearfix" >
+						<div class="col-md-12 col-sm-12 col-xs-12  column" style="margin-top: 15px;">
+							<div>客户基本信息列表：</div>
+							<div class="custom_table">
+							    <table class="table table-bordered table-hover table-condensed" style="width: 1800px;">
+									<thead>
+										<tr>
+											<th>										
+												<input id="checkAll" type="checkbox" />											
+												序号
+												
+											</th>
+											<th>
+												客户编号
+											</th>
+											<th>
+												姓名
+											</th>
+											<th>
+												性别
+											</th>
+											<th>
+												年龄
+											</th>
+											<th>
+												楼栋名称
+											</th>
+											<th>
+												楼层
+											</th>
+											<th>
+												房间号
+											</th>
+											<th>
+												床号
+											</th>
+											<th>
+												身份证号码
+											</th>
+											<th>
+												出生日期
+											</th>
+											<th>
+												入院日期
+											</th>
+											<th>
+												护理级别
+											</th>
+											<th>
+												护理员
+											</th>
+											
+											
+											<th>
+												民族
+											</th>
+											<th>
+												婚姻状态
+											</th>
+											<th>
+												联系手机号
+											</th>
+											<th>
+												所属服务站
+											</th>
+											<th>
+												家属姓名
+											</th>
+											<th>
+												家属联系电话
+											</th>
+											<th>
+												SOS号码
+											</th>
+											<th>
+												绑定设备
+											</th>
+											<th>
+												设备编号
+											</th>
+											<th>
+												SOS拨打模式
+											</th>
+											<th>
+												操作
+											</th>
+										</tr>
+									</thead>
+									<tbody class="gridList">																			
+									</tbody>
+								</table>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-4 col-xs-4 column botoom-left">
+				每页
+				<select name="" id="row_num">
+					<option value="">10</option>
+					<option value="">5</option>					
+					<option value="">12</option>
+					<option value="">15</option>
+				</select>
+				行， 共<span id="totalnums">200</span>条
+			</div>
+			<div class="col-md-8 col-sm-8 col-xs-8 column botoom-right">
+				<ul class="pagination" id="pagination1"></ul>
+				<div class="botoom-right1">
+					跳转到
+					<span id="">
+						<input id="tag" type="text" class="form-control" value="" >
+						<button type="button" id="search-Go" class="btn btn-primary btn-sm">go</button>
+					</span>
+			
+				</div>
+			</div>			
+			
+		</div>
+										
+			
+									
+		
+		<script type="text/javascript">
+			
+			var mycustom=null;
+			var personNum;
+			mycustom=new CUSTOM_MANAGE();			
+			$(document).ready(function(){
+				mycustom.init();	
+				$("#searching").hide();//高级搜索DIV隐藏
+				
+				
+				//console.log("当前页："+curPage+"每页显示："+perPapernum+"总共数据："+totalNUm+"总共页数："+totalPages+"当前页的第一条："+currentPageFirst+"当前页的最后一条："+currentPageLast);
+		    });
+			
+		    var buttons = $.extend([], $.fn.datebox.defaults.buttons);
+			buttons.splice(1, 0, {
+				text: 'MyBtn',
+				handler: function(target){
+					alert('click MyBtn');
+				}
+			});
+			
+		</script>
+		
+	</body>
+</html>

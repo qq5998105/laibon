@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPC摄像头地图上管理</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/common/jquery-ui.css">
+    <link rel="stylesheet" href="../../css/common/Ipcmanage.css">
+    <link rel="stylesheet" href="../../css/apps/out-map.css">
+    <link rel="stylesheet" href="../../css/apps/sysMageOutMap.css"/>
+
+    <script src="../../js/plugins/jquery-1.10.2.min.js"></script>
+    <script src="../../js/plugins/bootstrap.min.js"></script>
+    <script src="../../js/plugins/jquery-ui.js"></script>
+    <script src="../../js/plugins/jqPaginator.js"></script>
+    <!--<script src="../../js/apps/ipc_manage.js"></script>	-->
+    <!--<script src="../../js/apps/ipc_manage.js"></script>-->
+</head>
+<body>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 column" style="margin-top: 15px;margin-bottom: 15px;">
+            <div class="row clearfix">
+                <div class="col-md-8 col-sm-8 column">
+                    <div id="beforesearch">
+                        <input id="tags" type="text" class="form-control"
+                               value="IPC的IP地址" onfocus="if (value =='IPC的IP地址'){value =''}"
+                               onblur="if (value ==''){value='IPC的IP地址'}">
+                        <button type="button" id="searchIcon" class="btn btn-primary btn-sm"><img src="../../img/search.png" style="max-height: 20px;"/>搜索</button>
+                        <!--<button type="button" id="senior_searchIcon" class="btn btn-primary btn-sm"><img src="../../img/search.png" style="max-height: 20px;"/>高级检索</button>-->
+                    </div>
+
+                </div>
+                <div class="col-md-4 col-sm-4 column">
+                    <!--<button type="button" id="deleteBtn" class="btn btn-primary btn-sm"><img src="../../img/delete.png" style="max-height: 20px;"/>删除</button>-->
+                    <!--<button type="button" id="addBtn" class="btn btn-primary btn-sm" data-toggle="modal" href="#modal-container-998611"><img src="../../img/add.png" style="max-height: 20px;"/>添加</button>-->
+
+                    <!--此处添加切换按钮-->
+                    <button  type="button" id="reverseBtn" class="btn btn-primary btn-sm"><img src="../../img/reverse.png" style="max-height: 20px;"/>列表切换</button>
+                </div>
+            </div>
+            <div class="row clearfix">
+
+            </div>
+        </div>
+    </div>
+
+    <!--“添加”按钮弹窗-->
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="modal fade" id="modal-container-998611" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">IPC设备添加</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="inputIP" class="col-sm-2 col-md-2 control-label">*IP地址：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <input type="email" class="form-control" id="addIp" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inOrout_door" class="col-sm-2 col-md-2 control-label">地图：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <select name="indoor_out" id="indoor_out">
+                                            <option value="">请选择</option>
+                                            <option value="0">室内</option>
+                                            <option value="1">室外</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="buildSelect">
+                                    <label for="inputBuilding" class="col-sm-2 col-md-2 control-label">楼栋：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <select name="addBuild" class="addBuild">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="floorSelect">
+                                    <label for="inputFloor" class="col-sm-2 col-md-2 control-label">楼层：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <select name="addFloor" class="addFloor">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Installation-location" class="col-sm-2 col-md-2 control-label">安装位置：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <input type="email" class="form-control" id="addLocation" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="addHold">保存</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!--“添加”按钮弹窗-->
+    <!--“编辑”弹窗-->
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="modal fade" id="modal-container-998612" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">IPC设备编辑</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="inputIP" class="col-sm-2 col-md-2 control-label">IP地址：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <input type="email" class="form-control" id="editIP" />
+                                    </div>
+                                </div>
+                                <div class="form-group" id="edit_buildeditBuildSelect">
+                                    <label for="inputBuilding" class="col-sm-2 col-md-2 control-label">楼栋：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <select name="addBuild" id="editBuild">
+                                            <!--<option value="">请选择</option>-->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="edit_floorSelect">
+                                    <label for="inputFloor" class="col-sm-2 col-md-2 control-label">楼层：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <select name="addFloor" class="editFloor">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Installation-location" class="col-sm-2 col-md-2 control-label">安装位置：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <input type="" class="form-control" id="editLocation" />
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">
+                                    <label for="inputFloor" class="col-sm-2 col-md-2 control-label" id="labelIPC">摄像头状态：</label>
+                                    <div class="col-sm-6 col-md-6">
+                                        <input type="password" class="form-control" id="editfloor" />
+                                    </div>
+                                </div>-->
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="editClose">关闭</button>
+                            <button type="button" class="btn btn-primary" id="editSave">保存</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!--“编辑”按钮弹窗-->
+</div>
+
+<!--室外地图开始-->
+<div id="container" tabindex="0">
+
+    <!--添加ipc界面-->
+    <div id="popBorder">
+        <div id="head">
+            <p id="fon">IPC设备添加</p>
+        </div>
+
+        <div id="address">
+            *IP地址
+            <input type="text" id="addr" class="input"/>
+        </div>
+
+        <div id="port">
+            *端口号
+            <input type="text" id="por" class="input"/>
+        </div>
+
+        <div id="cameraName">
+            设备名称
+            <input type="text" id="camName" class="input"/>
+        </div>
+
+        <div id="location">
+            安装位置
+            <input type="text" id="loc" class="input"/>
+        </div>
+
+        <div id="sure">
+            <input type="button" class="ter" value="保存" onclick="saveIPC()"/>
+            <input type="button" class="ter" value="关闭"onclick="closeIPC()"/>
+        </div>
+
+    </div>
+
+    <!--修改ipc界面-->
+    <div id="popBorder_alter">
+        <div id="head_alter">
+            <p id="fon_alter">IPC设备的修改</p>
+        </div>
+
+        <div id="address_alter">
+            IP地址
+            <input type="text" id="addr_alter" class="input"/>
+        </div>
+
+        <div id="port_alter">
+            端口号
+            <input type="text" id="por_alter" class="input"/>
+        </div>
+
+        <div id="cameraName_alter">
+            设备名称
+            <input type="text" id="camName_alter" class="input"/>
+        </div>
+
+        <div id="location_alter">
+            修改到的位置
+            <input type="text" id="loc_alter" class="input"/>
+        </div>
+
+        <div id="sure_alter">
+            <input type="button" class="ter" value="修改" onclick="alterIPC()"/>
+            <input type="button" class="ter" value="关闭"onclick="closeIPC_alter()"/>
+        </div>
+
+    </div>
+
+
+    <div id="zoomIn">放大</div>
+    <div id="zoomOut">缩小</div>
+</div>
+
+
+
+
+<!--室外地图结束-->
+<script src="http://webapi.amap.com/maps?v=1.3&key=b062bd4a28c823a317c632cacfbfae5f"></script>
+<script src="../../js/apps/out-map.js"></script>
+<script src="../../js/apps/system_manager/APIPosition.js"></script>
+<script src="../../js/apps/system_manager/IPCPosition.js"></script>
+
+<!--<script src=""></script>-->
+
+<script type="text/javascript">
+    var ipc_position=null;
+    ipc_position=new IPC_POSITION();
+    $(document).ready(function(){
+        ipc_position.init();
+        //console.log("当前页："+curPage+"每页显示："+perPapernum+"总共数据："+totalNUm+"总共页数："+totalPages+"当前页的第一条："+currentPageFirst+"当前页的最后一条："+currentPageLast);
+    });
+
+    $("#reverseBtn").click(function(){
+        window.location.href="IPC_manage.html";
+    });
+
+</script>
+
+</body>
+</html>

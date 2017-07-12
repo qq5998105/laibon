@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>手表管理</title>
+		<link rel="stylesheet" href="../../css/common/bootstrap.min.css">
+		<link rel="stylesheet" href="../../css/common/jquery-ui.css">	
+		<link rel="stylesheet" href="../../css/common/Watchmanage.css">		
+		<script src="../../js/plugins/jquery-1.10.2.min.js"></script>
+		<script src="../../js/plugins/bootstrap.min.js"></script>
+		<script src="../../js/plugins/jquery-ui.js"></script>				
+		<script src="../../js/apps/satus_collect.js"></script>		
+		<script type="text/javascript" src="../../js/plugins/jquery.min.js"></script>		
+		<script src="../../js/plugins/jqPaginator.js"></script>	
+		
+		
+	</head>
+	<body>
+			
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 col-sm-12 column" style="margin-top: 15px;margin-bottom: 15px;">
+					<div class="row clearfix">
+						<div class="col-md-8 col-sm-8 column">
+							    <button type="button" id="return_devicestatu" class="btn btn-primary btn-sm">返回</button>						    
+						</div>						
+					</div>
+					<div class="row clearfix" >
+						<div class="col-md-12 col-sm-12  column" style="margin-top: 15px;">
+							<div id="headText">离线手表汇总：</div>
+							<table class="table table-bordered table-hover table-condensed">
+								<thead>
+									
+								</thead>
+								<tbody class="gridList">
+																		
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 column botoom-left">
+				每页
+				<select name="" id="row_num">
+					<option value="">10</option>
+					<option value="">5</option>					
+					<option value="">12</option>
+					<option value="">15</option>
+				</select>
+				行， 共<span id="totalnums">200</span>条记录
+			</div>
+			<div class="col-md-9 column botoom-right">
+				<ul class="pagination" id="pagination1"></ul>
+				<div class="botoom-right1">
+					跳转到
+					<span id="">
+						<input id="tag" type="text" class="form-control" value="" >
+						<button type="button" id="search-Go" class="btn btn-primary btn-sm">go</button>
+					</span>
+			
+				</div>
+			</div>
+		</div>
+										
+			
+									
+		
+		<script type="text/javascript">
+			
+			var mydevice=null;
+			var personNum;
+			mydevice=new STATU_COLLECT();
+			
+			$(document).ready(function(){
+				mydevice.init();													
+				//console.log("当前页："+curPage+"每页显示："+perPapernum+"总共数据："+totalNUm+"总共页数："+totalPages+"当前页的第一条："+currentPageFirst+"当前页的最后一条："+currentPageLast);
+		   });					    
+			
+		</script>
+		
+	</body>
+</html>

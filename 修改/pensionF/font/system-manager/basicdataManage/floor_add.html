@@ -1,0 +1,132 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>添加楼层</title>
+</head>
+<script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+<script src="../../../js/apps/hashMap.js"></script>
+<body>
+
+<h1 align="center">添加楼层</h1>
+<br><br>
+<table width="50%" border="1" align="center" cellpadding="3" cellspacing="1" bordercolor="#ADADAD"
+       style="border-collapse:collapse">
+    <tr>
+        <td>编号：</td>
+        <td>
+            <input id="num" type="text" onchange="checkNum(event)"/><span id="hintNum" style="color: red">
+        </span>
+        </td>
+    </tr>
+    <tr>
+        <td>名称：</td>
+        <td>
+            <input name='name' type='text' id='name' /><span id="hintName"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>所属楼宇：</td>
+        <td>
+            <select id="buildingNum">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>操作:</td>
+        <td><input type="submit" name="Submit" value="提交" onClick="save(event);"/>
+            <input type="reset" name="Submit2" value="重置"/></td>
+    </tr>
+
+
+</table>
+<script>
+    HashMap.prototype.constructor = HashMap;
+    var hashmap = new HashMap();
+    var flag = true;
+    $(function () {
+
+        var buildingNum = window.document.getElementById("buildingNum");
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/floor/selectAllBuilding.do",
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+                console.log(data.body.length);
+                var str= "";
+                if(data.body.length > 0){
+                    var data = data.body;
+                    for (var j = 0; j < data.length; j++) {
+                        var buildingId = data[j].buildingId;
+                        var name = data[j].name;
+                        str += "<option>"+name+"</option>";
+                        hashmap.put(name,buildingId);
+                    }
+                    buildingNum.innerHTML = str;
+                }
+            }
+        });
+    });
+    /*提交添加的数据*/
+    function save(event) {
+        var buildindName=$("#buildingNum option:selected").text();
+        var buildingId =  hashmap.get(buildindName);
+        console.log("--------")
+        if ( document.getElementById("num").value==""||$("#name").val()=="")
+        {
+            alert('编号名称不能为空!');
+            return;
+        }
+        checkNum(event);
+        if(!flag){
+            alert("请修改编号！");
+            return;
+        }
+        console.log("-------->")
+        console.log("---------<")
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/floor/add.do",
+            type: "POST",
+            data:{"num":$("#num").val(),"name":$("#name").val(),"buildingId":buildingId},
+            dataType: "json",
+            success: function (data) {
+                console.log($("#num").val()+$("#name").val());
+                console.log(data);
+                alert("添加成功");
+                window.location.href="floor_info.html";
+            },
+            error:function (data) {
+                console.log(">>>>>>>>>")
+                console.log(data);
+                console.log($("#num").val()+" "+$("#name").val()+" "+buildingId);
+                console.log("error");
+            }
+        });
+    }
+    /*楼层编号num的唯一性验证*/
+    function checkNum(event) {
+        $.ajax({
+            url: "192.168.1.224:8080/nursecare/floor/validateNum.do",
+            data:{"num":$("#num").val()},
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log($("#num").val());
+                console.log(data.statu);
+                if ("100" == data.statu) {
+                    $("#hintNum").html("编号已存在");
+                    flag = false;
+                    return;
+                }
+                $("#hintNum").html("");
+                flag = true;
+            },
+            error: function (data) {
+                    alert("添加失败");
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
+

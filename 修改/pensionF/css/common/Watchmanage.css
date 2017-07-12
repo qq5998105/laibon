@@ -1,0 +1,160 @@
+body{
+	background-color: #ffffff;
+	font-size: 12px;
+}
+.nav-tabs{
+	background-color: #428bca;
+}
+#titleRow{
+	font-size: larger;
+}
+a{
+	
+	color: #080808;
+}
+.floor {
+    margin-bottom: 15px;
+    width: 160px;
+    height: 30px;
+    border-color: #eeeeee;
+    border-radius: 5px;
+}
+#curefloor{
+	padding-top: 5px;
+    padding-left: 20px;
+}
+#searchIcon {
+	background-color: #6bb2fb;
+	border-color:#ffffff;
+	height: 35px;margin-left: 10px;
+	float: left;
+}
+#senior_searchIcon {
+	background-color: #6bb2fb;
+	border-color:#ffffff;
+	height: 35px;margin-left: 10px;
+	float: left;
+}
+#deleteBtn{
+	background-color: #ffffff;
+	border-color:#ffffff;
+	height: 35px;
+	float: right;
+	color: black;
+	margin-left: 0px;
+}
+#addBtn{
+	background-color: #ffffff;
+	border-color:#ffffff;
+	height: 35px;
+	float: left;
+	color: black;
+	margin-left: 0px;
+}
+
+#tags{
+	float: left;
+    width: 40%;
+}
+.botoom{
+  //display: -webkit-box;	
+  
+}
+.botoom-left{
+	display: inline;
+    float: left;
+    padding-left: 0px;
+    margin-top: 25px;
+    
+}
+.botoom-right{
+	
+	padding-left: 0px;
+    padding-right: 0px;
+    display: inline;
+    float: right;
+}
+.pagination{
+	float: left;
+	    
+}
+
+.botoom-right1{
+	display: inline;
+    float: right;
+    margin-top: 20px;
+    
+    margin-left: 0px;
+}
+#tag{
+	width: 40px;
+    display: inline;
+}
+#search-Go{
+	
+}
+#myModalLabel{
+	text-align: center;
+}
+.modal-header{
+	background-color: rgba(166, 197, 255, 0.44);
+}
+#labelIPC{
+	padding-left: 0; 
+}
+#searching{
+	/*display: none;*/
+}
+
+#inputImei{
+	width: 80px;
+}
+#allperson{
+	width: 60%;
+	height: 300px;
+    margin: auto;
+    border-style: groove;
+    border-width: thin;
+    display: none;    
+    
+}
+.allperson_top{
+	margin-top: 10px;
+}
+#allperson_mid{
+	width: 300px;
+    max-height: 200px;
+    margin: auto;
+    overflow-y: auto;
+}
+.list_num{
+	float: right;
+	margin-top: 8px;
+}
+.list_page{
+	float: left;
+}
+#pagination2{
+	margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: xx-small;
+}
+#pagego{
+	max-width: 30px;
+	margin-top: 5px;
+    margin-left: 5px;
+}
+.allperson_footer{
+	height: 30px;
+}
+.allperson_footerN{
+	height: 30px;
+	margin-top: 10px;
+}
+#butgrop{
+	width: 50%;
+    margin: auto;
+}
+.allperson_cancel{
+	float: right;
+}

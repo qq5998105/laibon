@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>视频监控</title>
+		<link rel="stylesheet" href="../css/common/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/common/main.css">
+		<link rel="stylesheet" href="../css/common/jquery-ui.css">
+		<script src="../js/plugins/jquery-1.10.2.min.js"></script>
+		<script src="../js/plugins/bootstrap.min.js"></script>
+		<script src="../js/plugins/jquery-ui.js"></script>
+		<script src="../js/apps/video_surveillance.js"></script>
+		<style type="text/css">
+			iframe{
+				border: aliceblue;
+			}
+		</style>
+	</head>
+	<body>
+		<!--标签式的导航菜单-->
+		<div class="container">
+			<div class="row clearfix" id="titleRow">
+				<div class="col-md-12 column">
+					<ul class="nav nav-tabs" style="background-color: #428bca;">
+						<li >
+							<a href="#Indoor_location">室内定位</a>
+						</li>
+						<li>
+							<a href="#Outdoor_location">室外定位</a>
+						</li>
+						<li class="active">
+							<a href="#Video_surveillance">视频监控</a>
+						</li>
+						<li>
+							<a href="#Wait_processing">等待处理</a>
+						</li>
+						<li>
+							<a href="#Event_log">事件记录</a>
+						</li>
+						<li>
+							<a href="#system_management">系统管理</a>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</div>
+		
+		
+		<!--导航菜单各模块DIV-->
+		<div id="myTabContent" class="tab-content" style="margin-top: 15px;">					
+			<!--视频监控@面板-->
+			<div class="tab-pane fade in active" id="Video_surveillance">
+				<div class="container">
+						<div class="row clearfix">
+							<div class="col-md-12 column" style="display: inline-flex;">
+								<span id="curefloor">
+									当前楼层：&nbsp;&nbsp;
+								</span>
+								<select class="floor">									
+								</select>
+								<span id="curefloor">
+									选择监控：&nbsp;&nbsp;
+								</span>
+								<select class="indoorLocation">
+									
+								</select>								
+							<button type="button" id="startCameraBtn" class="btn btn-primary btn-sm" style="height: 35px;margin-left: 10px;"><img src="../img/camera.png" style="max-height: 20px;"/>开启</button>
+						
+							</div>
+						</div>
+					<iframe src="alarm_List.html" width="100%" height="700px"; id="frame_1"></iframe>
+				</div>
+			</div>
+			<!--视频监控@面板结束-->
+			
+		</div>
+		<script>
+			var video_survilance=null;
+			video_survilance=new VIDEO_SURVEILANCE();
+			video_survilance.init();
+			function test(){
+				return video_survilance.text();
+			}
+			$(document).ready(function(){
+				$(' a').click(function (e) {
+				  e.preventDefault()
+				  $(this).tab('show')
+				});
+				
+                /*点击导航标签跳转到各模块页面*/               				
+				$(".nav-tabs li a").click(function(){
+					console.log($(this).attr("href"));
+					var indexflag;
+					indexflag=$(this).attr("href");
+					if(indexflag){
+						switch (indexflag){
+							case "#Indoor_location":
+							    window.location.href="Indoor_location.html";
+								break;
+							case "#Outdoor_location":
+							    window.location.href="Outdoor_location.html";
+								break;
+							case "#Video_surveillance":
+							    window.location.href="Video_surveillance.html";
+								break;
+							case "#Wait_processing":
+							    window.location.href="Wait_processing.html";
+								break;
+							case "#Event_log":
+							    window.location.href="Event_log.html";
+								break;
+							case "#system_management":
+							    window.location.href="system_management.html";
+								break;
+							default:
+								break;
+						}
+					}	
+				});
+			});
+		</script>
+	</body>
+</html>

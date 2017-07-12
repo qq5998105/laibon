@@ -1,0 +1,123 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>添加楼宇</title>
+</head>
+<script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+
+<body>
+
+<h1 align="center">添加楼宇:</h1>
+<br><br>
+<table width="50%" border="1" align="center" cellpadding="3" cellspacing="1" bordercolor="#ADADAD"
+       style="border-collapse:collapse">
+    <tr>
+        <td>编号：</td>
+        <td>
+            <input name="buildingId" id="num" type="text" onchange="checkNum(event)"/><span id="hintNum" style="color: red">
+        </span>
+        </td>
+    </tr>
+    <tr>
+        <td>名称：</td>
+        <td>
+            <input name='name' type='text' id='name'  onchange="checkName(event)"/><span id="hintName"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" name="Submit" value="提交" onClick="save(event);"/>
+            <input type="reset" name="Submit2" value="重置"/></td>
+    </tr>
+</table>
+<script>
+    var flag_num = false;
+    var flag_name = false;
+    /*提交添加的数据*/
+    function save(event) {
+        if ( document.getElementById("num").value==""||$("#name").val()=="")
+        {
+            alert('编号和名称不能为空!');
+            return;
+        }
+        checkNum(event);
+        if(!flag_num) {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>");
+            alert("请修改编号！");
+            return;
+        }
+        checkName(event);
+        if(!flag_name) {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>");
+            alert("请修改名称！");
+            return;
+        }
+        $.ajax({
+            url: "http://192.168.1.224:8080/nursecare/building/add.do",
+//            url:"http://192.168.1.45:8082/lb/building/add.do",
+            type: "POST",
+            data:{"num":$("#num").val(),"name":$("#name").val()},
+            dataType: "json",
+
+            success: function (data) {
+                console.log($("#num").val()+$("#name").val());
+                console.log(data);
+                alert("添加成功！");
+                window.location.href="building_info.html";
+            },
+            error:function (data) {
+                console.log($("#num").val()+$("#name").val());
+                console.log("error");
+            }
+        });
+    }
+    /*楼宇编号num的唯一性验证*/
+    function checkNum(event) {
+        $.ajax({
+            url: "http://192.168.1.224:8080/nursecare/building/validateNum.do",
+            data:{"num":$("#num").val()},
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log(data.statu);
+                if ("100" == data.statu) {
+                    $("#hintNum").html("编号已存在");
+                    flag_num = false;
+                    return;
+                }
+                $("#hintNum").html("");
+                flag_num = true;
+            },
+            error: function (data) {
+                    alert("添加失败");
+            }
+        });
+    }
+    /*楼宇名称的唯一性验证*/
+    function checkName(event) {
+
+        $.ajax({
+            url: "http://192.168.1.224:8080/nursecare/building/validateName.do",
+            data:{"name":$("#name").val()},
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                console.log($("#name").val());
+                if ("100" == data.statu) {
+                    $("#hintName").html("名称已存在");
+                    flag_name = false;
+                    return;
+                }
+                $("#hintName").html("");
+                flag_name = true;
+            },
+            error: function (data) {
+                alert("添加失败");
+            }
+        });
+    }
+</script>
+</body>
+</html>
+

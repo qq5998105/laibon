@@ -1,0 +1,235 @@
+<html>
+<head>
+    <title>修改房间信息</title>
+    <meta charset="utf-8"/>
+    <script src="../../../js/plugins/jquery-1.10.2.min.js"></script>
+    <script src="../../../js/apps/hashMap.js"></script>
+</head>
+
+<body>
+<h1 align="center">修改房间信息</h1>
+<br><br>
+<table width="50%" border="1" align="center" cellpadding="3" cellspacing="1"
+       bordercolor="#ADADAD" style="border-collapse:collapse">
+    <tr>
+        <td>房间编号：</td>
+        <td><input name='num' type='text' id='num' onchange="checkNum(event)" value=''/>
+            <span id="hintNum" style="color: red"></span></td>
+    </tr>
+    <tr>
+        <td>房间名称：</td>
+        <td><input name='name' type='text' id='name' value=''/>
+            <span id="hintName" style="color: red"></span></td>
+    </tr>
+    <tr>
+        <td>所属楼层：</td>
+        <td>
+            <select id="buildingName">
+            </select>
+            <select id="floorName">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" id="submit" value="提交" onclick="save(event);"/>
+            <input type="reset" name="Submit2" value="重置"/></td>
+    </tr>
+</table>
+<script>
+    var roomId = localStorage["roomId"];
+    var num = "";
+    var name = "";
+    var floorNm = "";
+    var flag = true;
+    var firstId;
+    var buildName;
+    console.log(roomId);
+    HashMap.prototype.constructor = HashMap;
+    var hashmapBuild = new HashMap();
+    var hashmapFloor = new HashMap();
+    $(function () {
+        var floorName = window.document.getElementById("floorName");
+        var buildingName = document.getElementById("buildingName");
+        if (buildingName && buildingName.addEventListener) {
+            buildingName.addEventListener('change',function (e) {
+                var ev = e || window.event;
+                var target = ev.target || ev.srcElement;
+//                console.log(target.value);
+                onloadFloor(target.value);
+            },false)
+        }
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/room/getUpdateRoom.do",
+            data:{"roomId":roomId},
+            dataType:"json",
+            type:"POST",
+            success:function (data ) {
+                console.log(data);
+                if ("000" == data.statu){
+                    console.log("---->")
+                    $("#num").val(data.body.num);
+                    $("#name").val(data.body.roomName);
+                    floorNm = data.body.floorName;
+                    buildName = data.body.buildingName;
+                    num = $("#num").val();
+                    name = $("#name").val();
+                    console.log("---->")
+                }
+            },
+            error:function (data) {
+                console.log(roomId);
+                console.log(data);
+                    console.log("error");
+            }
+        });
+        onlondBuild();
+
+    });
+    //加载所属楼宇
+    function onlondBuild() {
+        var buildingName = window.document.getElementById("buildingName");
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/floor/selectAllBuilding.do",
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+//                console.log(data.body.length);
+                var str= "";
+                if(data.body.length > 0){
+                    var data = data.body;
+                    for (var j = 0; j < data.length; j++) {
+
+                        var buildingId = data[j].buildingId;
+                        var name = data[j].name;
+                        if(buildName == data[j].name){
+                            var bn = "<option value='"+buildingId+"'>"+buildName+"</option>";
+                            firstId = buildingId;
+                        }else {
+                            str += "<option value='"+buildingId+"'>"+name+"</option>";
+                        }
+                        hashmapBuild.put(name,buildingId);
+
+                    }
+                    bn += str;
+                    buildingName.innerHTML = bn;
+                    onloadFloor(firstId);
+                }
+            }
+        });
+    }
+    //加载所属楼层
+    function onloadFloor(id) {
+        var floorName = window.document.getElementById("floorName");
+        console.log(id);
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/room/selectFloorById.do",
+            data:{"buildingId":id},
+            type:"POST",
+            dataType:"json",
+            success:function (data) {
+                console.log(data);
+                if("100" == data.statu){
+                    floorName.innerHTML = "";
+                    alert(data.msg);
+                    return;
+                }
+                var str= "";
+                if(data.body.length > 0){
+                    var data = data.body;
+                    for (var j = 0; j < data.length; j++) {
+                        var floorId = data[j].floorId;
+                        var name = data[j].name;
+                        if (floorNm == data[j].name) {
+                            var fn =  "<option value='"+floorId+"'>"+floorNm+"</option>";
+                        } else {
+                            str += "<option>"+name+"</option>";
+                        }
+                        hashmapFloor.put(name,floorId);
+                    }
+                    fn += str;
+                    floorName.innerHTML = fn;
+                }
+            }
+        });
+    }
+    function save(event) {
+        var floorName=$("#floorName option:selected").text();
+        var floorId =  hashmapFloor.get(floorName);
+        var buildNm = $("#buildName option:selected").text();
+        var buildId = hashmapBuild.get(buildName);
+        console.log(floorId+" "+floorName);
+        if ( document.getElementById("num").value==""||$("#name").val()=="")
+        {
+            alert('编号和名称不能为空!');
+            return;
+        }
+        if(num == $("#num").val() && name == $("#name").val() && floorNm == floorName && buildName == buildNm){
+            $("#hintNum").html("");
+            $("#hintName").html("");
+            alert("未修改内容！");
+            window.location.href="room_info.html";
+            return;
+        }
+        if(num == $("#num").val()){
+            $("#hintNum").html("编号未更改");
+        }else{
+            checkNum(event);
+            if (!flag) {
+                alert("请修改编号！");
+                return;
+            }
+        }
+        if(name == $("#name").val()) {
+            $("#hintName").html("名称未更改");
+        }
+        console.log($("#name").val());
+        $.ajax({
+            url:"http://192.168.1.224:8080/nursecare/room/update.do",
+            data:{"roomId":roomId,"num":$("#num").val(),"name":$("#name").val(),"floorId":floorId,"buildingId":buildId},
+            dataType:"json",
+            type:"POST",
+            success:function (data) {
+                if("000" == data.statu) {
+                    alert("修改成功！");
+                    window.location.href="room_info.html";
+                }
+            },
+            error:function (data) {
+                console.log("修改失败");
+            }
+        });
+    }
+    //楼层编号唯一性验证
+    function checkNum(event) {
+        if(num == $("#num").val()){
+            $("#hintNum").html("");
+            return;
+        }
+        $.ajax({
+            url: "http://192.168.1.224:8080/nursecare/room/validateNum.do",
+            data:{"num":$("#num").val()},
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                console.log($("#num").val());
+                console.log(data.statu);
+                if ("100" == data.statu) {
+                    $("#hintNum").html("编号已存在");
+                    flag = false;
+                    return;
+                }
+                $("#hintNum").html("");
+                flag = true;
+            },
+            error: function (data) {
+                alert("添加失败");
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
+
+

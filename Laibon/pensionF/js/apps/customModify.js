@@ -18,7 +18,7 @@ window.onload = function ()
     //护理等级
     function getSelectLevel() {
 		$.ajax({
-			url: window.localStorage["ip:port"]+'/nursecare/patient/selectLevel.do',
+			url: window.localStorage["ip:port"]+'/lb/patient/selectLevel.do',
 			type: 'POST',
 			//xml, html, script, json, jsonp, text
 			dataType: 'text',
@@ -47,7 +47,7 @@ window.onload = function ()
     
     function getBuilds() {
     	$.ajax({
-    		url: window.localStorage["ip:port"]+'/nursecare/buildingAbout/findBuilding.do',
+    		url: window.localStorage["ip:port"]+'/lb/buildingAbout/findBuilding.do',
     		type: 'GET',
     		//xml, html, script, json, jsonp, text
     		dataType: 'text',
@@ -81,7 +81,7 @@ window.onload = function ()
     function getFloors(building_Id) {
     	if(building_Id) {
     		$.ajax({
-    			url: window.localStorage["ip:port"]+'/nursecare/buildingAbout/findFloorByBuilding.do?buildingId=' + building_Id,
+    			url: window.localStorage["ip:port"]+'/lb/buildingAbout/findFloorByBuilding.do?buildingId=' + building_Id,
     			type: 'GET',
     			//xml, html, script, json, jsonp, text
     			dataType: 'text',
@@ -122,7 +122,7 @@ window.onload = function ()
 	function getRooms(floorId) {
     	if(floorId) {
     		$.ajax({
-    			url: window.localStorage["ip:port"]+'/nursecare/bed/selectRoomById.do',
+    			url: window.localStorage["ip:port"]+'/lb/bed/selectRoomById.do',
     			data:{"floorId":floorId},
     			type: 'POST',
     			//xml, html, script, json, jsonp, text
@@ -164,7 +164,7 @@ window.onload = function ()
     function getbeds(roomId){
     	if(roomId) {
     		$.ajax({
-    			url: window.localStorage["ip:port"]+'/nursecare/bed/selectNotPatientBed.do',
+    			url: window.localStorage["ip:port"]+'/lb/bed/selectNotPatientBed.do',
     			data:{"roomId":roomId},
     			type: 'POST',
     			//xml, html, script, json, jsonp, text
@@ -205,7 +205,7 @@ window.onload = function ()
 /*获取全部服务站*/
 	function getseverStation() {
 		$.ajax({
-			url: window.localStorage["ip:port"]+'/nursecare/patient/selectStation.do',
+			url: window.localStorage["ip:port"]+'/lb/patient/selectStation.do',
 			type: 'POST',
 			//xml, html, script, json, jsonp, text
 			dataType: 'text',
@@ -237,7 +237,7 @@ window.onload = function ()
 
 function getStaff() {
 		$.ajax({
-			url: window.localStorage["ip:port"] + '/nursecare/staff/getStaffLikeName.do',
+			url: window.localStorage["ip:port"] + '/lb/staff/getStaffLikeName.do',
 			type: 'POST',
 			//xml, html, script, json, jsonp, text
 			//          data:{
@@ -272,7 +272,7 @@ function getStaff() {
 
        //民族下拉列表
 
-     var reqUrl=window.localStorage["ip:port"]+'/nursecare/commdict/list.do';
+     var reqUrl=window.localStorage["ip:port"]+'/lb/commdict/list.do';
 
 //       console.log({"staff":JSON.stringify(testobj)});
          $.ajax({
@@ -371,7 +371,7 @@ function getStaff() {
 		    };
 		    console.log(JSON.stringify(infoobj));
         	$.ajax({
-             url: 'http://192.168.1.45:8082/nursecare/patient/insert.do',
+             url: 'http://192.168.1.45:8082/lb/patient/insert.do',
              type: 'POST',
              data:infoobj,
              //xml, html, script, json, jsonp, text
@@ -491,7 +491,7 @@ function getStaff() {
             customer.attr("required","required");
         }else{
             $.ajax({
-                url: window.localStorage["ip:port"]+'/nursecare/patient/checkNum.do',
+                url: window.localStorage["ip:port"]+'/lb/patient/checkNum.do',
                 type: 'POST',
                 data:{num:"num"},
                 //xml, html, script, json, jsonp, text
@@ -519,7 +519,7 @@ function getStaff() {
             custom.attr("required","required");
         }else{
             $.ajax({
-                url: window.localStorage["ip:port"]+'/nursecare/patient/checkIDCard.do',
+                url: window.localStorage["ip:port"]+'/lb/patient/checkIDCard.do',
                 type: 'POST',
                 data:{num:"IDCardNum"},
                 //xml, html, script, json, jsonp, text
@@ -547,7 +547,7 @@ function getStaff() {
             customP.attr("required","required");
         }else{
             $.ajax({
-                url: window.localStorage["ip:port"]+'/nursecare/patient/checkPhone.do',
+                url: window.localStorage["ip:port"]+'/lb/patient/checkPhone.do',
                 type: 'POST',
                 data:{num:"phone"},
                 //xml, html, script, json, jsonp, text
@@ -569,7 +569,7 @@ function getStaff() {
 	// 查找客户的基础属性字段
 	function patAttr() {
         $.ajax({
-            url: window.localStorage["ip:port"]+'/nursecare/patAttrDef/list.do',
+            url: window.localStorage["ip:port"]+'/lb/patAttrDef/list.do',
             type: 'POST',
             //xml, html, script, json, jsonp, text
 //          data:{
@@ -634,7 +634,7 @@ function getStaff() {
 	function geteasySearch(cp) {
 		var searchText = $("#easySearch").val();
 		$.ajax({
-			url: window.localStorage["ip:port"] + '/nursecare/staff/getStaffLikeName.do',
+			url: window.localStorage["ip:port"] + '/lb/staff/getStaffLikeName.do',
 			type: 'POST',
 			//xml, html, script, json, jsonp, text
 			data: {
@@ -703,7 +703,7 @@ function getStaff() {
 	//扩展属性
 	
 		$.ajax({
-                url: window.localStorage["ip:port"]+'/nursecare/patient/selectPatEx.do',
+                url: window.localStorage["ip:port"]+'/lb/patient/selectPatEx.do',
                 type: 'POST',
                 data:{num:"num"},
                 //xml, html, script, json, jsonp, text
